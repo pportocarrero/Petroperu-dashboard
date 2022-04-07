@@ -2,11 +2,19 @@
 # IMPORT CONFIGURATIONS
 
 import streamlit as st
+import os
 from plotly.subplots import make_subplots
 from streamlit_metrics import metric, metric_row
 import plotly.express as px
 import pandas as pd
-import numpy as np
+
+# LOAD SOME DATA
+os.chdir('C:/Users/pport/MINISTERIO DE ECONOMIA Y FINANZAS/DPFE - DGTP - Pedro - MEF - Pedro - MEF/'
+         'pportocarrero.MEF/Proyectos/Petroperu/Petroperu dashboard/')
+
+balance_sheet = pd.read_csv('balance_sheet_annual2.csv', delimiter = ';')
+
+income_statement = pd.read_csv('income_statement.csv', delimiter = ';')
 
 # DEFINITIONS
 
@@ -22,12 +30,6 @@ fin_stmt = {'Información financiera': ['Principales indicadores',
 types_df = pd.DataFrame(fin_stmt)
 clist = types_df['Información financiera'].unique()
 sidebar_options = st.sidebar.selectbox('Seleccione la información a visualizar:', clist)
-
-# LOAD SOME DATA
-
-balance_sheet = pd.read_csv('balance_sheet_annual2.csv', delimiter = ';')
-
-income_statement = pd.read_csv('income_statement.csv', delimiter = ';')
 
 # RESUMEN DE INDICADORES
 
