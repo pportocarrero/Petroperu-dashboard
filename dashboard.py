@@ -65,9 +65,11 @@ elif sidebar_options == 'Últimas noticias y hechos de importancia':
     st.write('Escribir lo último sobre Petroperú')
 
     st.metric(label="Avance físico de obra", value="96.8%", delta="4.1%")
+
     kpi_latest1, kpi_latest2 = st.columns(2)
 
     kpi_latest1.metric("Avance físico de obra", "96.79%", "4.05%")
+
     kpi_latest2.metric("Avance programado", "99.37%", "6.27%")
 
 elif sidebar_options == 'Balance General':
@@ -306,13 +308,13 @@ elif sidebar_options == 'Balance General':
         st.subheader('4. Capital de trabajo')
 
         capital_trabajo = pd.DataFrame({'año': assets_summary['año'],
-                                        'Capital de trabajo': balance_sheet['Total activo corriente'] -
-                                                            balance_sheet['Total pasivo corriente']
+                                        'Capital de trabajo': (balance_sheet['Total activo corriente'] -
+                                                            balance_sheet['Total pasivo corriente']) / 1000
                                         })
 
         fig_capital_trabajo = px.bar(capital_trabajo, x = 'año', y = 'Capital de trabajo',
-                                      labels = {'año': 'Año', 'Capital de trabajo': 'Número de veces'},
-                                      title='Capital de trabajo', text_auto = '.2s')
+                                      labels = {'año': 'Año', 'Capital de trabajo': 'En millones de US$'},
+                                      title='Capital de trabajo', text_auto = ',.1f')
 
         st.plotly_chart(fig_capital_trabajo, use_container_width=True)
 
@@ -487,28 +489,109 @@ elif sidebar_options == 'Balance General':
 
         # Total de ingresos
 
-        st.subheader('Ingresos totales')
+        st.subheader('1. Ingresos totales')
 
         ingresos_totales = pd.DataFrame({
             'año': assets_summary['año'], 'Ingresos totales': income_statement['Total ingresos'] / 1000
         })
 
         fig_ingresos_totales = px.bar(ingresos_totales, x = 'año', y = 'Ingresos totales',
-                                      labels = {'año': 'Año', 'Ingresos totales': 'Ingresos totales'},
+                                      labels = {'año': 'Año', 'Ingresos totales': 'Millones de US$'},
                                       title = 'Ingresos totales (en millones de US$)',
-                                      text_auto = ',2f')
+                                      text_auto = ',.1f')
 
         st.plotly_chart(fig_ingresos_totales, use_container_width = True)
 
         # Margen bruto
 
+        st.subheader('2. Margen bruto')
+
+        margen_bruto = pd.DataFrame({
+            'año': assets_summary['año'], 'Margen bruto': income_statement['Ganancia bruta'] /
+                                                     income_statement['Total ingresos']
+        })
+
+        fig_margen_bruto = px.bar(margen_bruto, x = 'año', y = 'Margen bruto',
+                                  labels = {'año': 'Año', 'Margen bruto': '%'},
+                                  title = 'Margen bruto (en %)', text_auto = '.1%')
+
+        st.plotly_chart(fig_margen_bruto, use_container_width = True)
+
+        st.latex(r'''Margen\;bruto = \frac{Resultado\;bruto}{Ingresos}\%
+        ''')
+
         # Margen operativo
+
+        st.subheader('3. Margen operativo')
+
+        margen_operativo = pd.DataFrame({
+            'año': assets_summary['año'], 'Margen operativo': income_statement['(Pérdida) Ganancia por '
+                                                                               'actividades de operación'] /
+                                                          income_statement['Total ingresos']
+        })
+
+        fig_margen_operativo = px.bar(margen_operativo, x = 'año', y = 'Margen operativo',
+                                  labels = {'año': 'Año', 'Margen operativo': '%'},
+                                  title = 'Margen operativo (en %)', text_auto = '.1%')
+
+        st.plotly_chart(fig_margen_operativo, use_container_width = True)
+
+        st.latex(r'''Margen\;operativo = \frac{Resultado\;operativo}{Ingresos}\%
+        ''')
 
         # Margen neto
 
+        st.subheader('4. Margen neto')
+
+        margen_neto = pd.DataFrame({
+            'año': assets_summary['año'], 'Margen neto': income_statement['Total resultados integrales'] /
+                                                    income_statement['Total ingresos']
+        })
+
+        fig_margen_neto = px.bar(margen_neto, x = 'año', y = 'Margen neto',
+                                 labels = {'año': 'Año', 'Margen neto': '%'},
+                                 title = 'Margen neto (en %)', text_auto = '.1%')
+
+        st.plotly_chart(fig_margen_neto, use_container_width = True)
+
+        st.latex(r'''Margen\;neto = \frac{Resultado\;neto}{Ingresos}\%
+        ''')
+
         # ROA
 
+        st.subheader('5. ROA (Return Over Assets)')
+
+        roa = pd.DataFrame({
+            'año': assets_summary['año'], 'ROA': income_statement['Total resultados integrales'] /
+                                                         balance_sheet['TOTAL ACTIVO']
+        })
+
+        fig_roa = px.bar(roa, x = 'año', y = 'ROA',
+                                 labels = {'año': 'Año', 'ROA': '%'},
+                                 title = 'ROA (Return Over Assets)', text_auto = '.1%')
+
+        st.plotly_chart(fig_roa, use_container_width = True)
+
+        st.latex(r'''ROA\;(Return\;over\;assets) = \frac{Resultado\;neto}{Activos}\%
+        ''')
+
         # ROE
+
+        st.subheader('6. ROE (Return Over Equity)')
+
+        roe = pd.DataFrame({
+            'año': assets_summary['año'], 'ROE': income_statement['Total resultados integrales'] /
+                                                 balance_sheet['TOTAL PATRIMONIO']
+        })
+
+        fig_roe = px.bar(roe, x = 'año', y = 'ROE',
+                         labels = {'año': 'Año', 'ROE': '%'},
+                         title = 'ROE (Return Over Equity)', text_auto = '.1%')
+
+        st.plotly_chart(fig_roe, use_container_width = True)
+
+        st.latex(r'''ROA\;(Return\;over\;equity) = \frac{Resultado\;neto}{Patrimonio}\%
+        ''')
 
 elif sidebar_options == 'Estado de Resultados':
 
