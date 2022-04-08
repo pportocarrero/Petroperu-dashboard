@@ -370,9 +370,54 @@ elif sidebar_options == 'Balance General':
 
     elif sidebar_balance == 'Situación de los pasivos':
 
-        st.title('Situación de los pasivos financieros')
+        st.title('Situación de los pasivos financieros (en MM US$)')
 
-        st.text('Pronto')
+        # Pasivos corrientes
+
+        st.subheader('Pasivos corrientes')
+
+        # Cuentas por pagar
+
+        ctas_pagar = pd.DataFrame({
+            'año': balance_sheet['year'],
+            'Cuentas por pagar': (balance_sheet['Cuentas por pagar comerciales'] +
+                                  balance_sheet['Otras cuentas por pagar comerciales']) / 1000
+        })
+
+        fig_ctas_pagar = px.bar(ctas_pagar, x = 'año', y = 'Cuentas por pagar',
+                                       labels = {'año': 'Año',
+                                                 'Cuentas por pagar': 'En millones de US$'},
+                                       title = 'Cuentas por pagar 1/', text_auto = ',.0f'
+                                       )
+
+        st.plotly_chart(fig_ctas_pagar, use_container_width = True)
+
+        st.caption('1/ Cuentas por pagar incluye: (i) Cuentas por pagar comerciales; y '
+                   '(ii) Otras cuentas por pagar comerciales.')
+
+        # Otros pasivos financieros
+
+        otros_pasivos = pd.DataFrame({
+            'año': balance_sheet['year'],
+            'Otros pasivos financieros': (balance_sheet['Otros pasivos financieros'] +
+                                  balance_sheet['Otras provisiones'] +
+                                          balance_sheet['Pasivos por arrendamientos']) / 1000
+        })
+
+        fig_otros_pasivos = px.bar(otros_pasivos, x = 'año', y = 'Otros pasivos financieros',
+                                labels = {'año': 'Año',
+                                          'Otros pasivos financieros': 'En millones de US$'},
+                                title = 'COtros pasivos financieros 1/', text_auto = ',.0f'
+                                )
+
+        st.plotly_chart(fig_otros_pasivos, use_container_width = True)
+
+        st.caption('1/ Cuentas por pagar incluye: (i) Otros pasivos financieros; '
+                   '(ii) Otras provisiones; y (iii) Pasivos por arrendamientos.')
+
+        # Pasivos no corrientes
+
+        st.subheader('Pasivos no corrientes')
 
     elif sidebar_balance == 'Análisis de ratios financieros':
 
