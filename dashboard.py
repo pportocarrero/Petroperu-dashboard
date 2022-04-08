@@ -100,7 +100,7 @@ elif sidebar_options == 'Balance General':
 
         latest_year = balance_sheet['year'].iloc[-1]
 
-        st.title('Resumen del Balance General de Petroperú al ' + str(latest_year) + ' (en miles de US$)')
+        st.title('Resumen del Balance General de Petroperú al ' + str(latest_year) + ' (en millones de US$)')
 
         balance_sheet_summary = pd.DataFrame({'año': balance_sheet['year'],
                                               'Activos': balance_sheet['TOTAL ACTIVO'],
@@ -110,46 +110,60 @@ elif sidebar_options == 'Balance General':
 
         # KPI's
 
-        latest_assets = balance_sheet['TOTAL ACTIVO'].iloc[-1]
+        latest_assets = balance_sheet['TOTAL ACTIVO'].iloc[-1] / 1000
 
-        assets_t1 = balance_sheet['TOTAL ACTIVO'].iloc[-2]
+        assets_t1 = balance_sheet['TOTAL ACTIVO'].iloc[-2] / 1000
 
         delta_assets = latest_assets / assets_t1 - 1
 
-        delta_assets = '{:.2%}'.format(delta_assets)
+        delta_assets = '{:.1%}'.format(delta_assets)
 
-        latest_liabilities = balance_sheet['TOTAL PASIVO'].iloc[-1]
+        latest_liabilities = balance_sheet['TOTAL PASIVO'].iloc[-1] / 1000
 
-        liabilities_t1 = balance_sheet['TOTAL PASIVO'].iloc[-2]
+        liabilities_t1 = balance_sheet['TOTAL PASIVO'].iloc[-2] / 1000
 
         delta_liabilities = latest_liabilities / liabilities_t1 - 1
 
-        delta_liabilities = '{:.2%}'.format(delta_liabilities)
+        delta_liabilities = '{:.1%}'.format(delta_liabilities)
 
-        latest_equity = balance_sheet['TOTAL PATRIMONIO'].iloc[-1]
+        latest_equity = balance_sheet['TOTAL PATRIMONIO'].iloc[-1] / 1000
 
-        equity_t1 = balance_sheet['TOTAL PATRIMONIO'].iloc[-2]
+        equity_t1 = balance_sheet['TOTAL PATRIMONIO'].iloc[-2] / 1000
+
+        roa_latest = income_statement['Total resultados integrales'].iloc[-1] / balance_sheet['TOTAL ACTIVO'].iloc[-1]
+
+        roa_t1 = income_statement['Total resultados integrales'].iloc[-2] / balance_sheet['TOTAL ACTIVO'].iloc[-2]
+
+        delta_roa = roa_latest - roa_t1
+
+        roe_latest = income_statement['Total resultados integrales'].iloc[-1] / balance_sheet['TOTAL PATRIMONIO'].iloc[-1]
+
+        roe_t1 = income_statement['Total resultados integrales'].iloc[-2] / balance_sheet['TOTAL PATRIMONIO'].iloc[-2]
+
+        delta_roe = roe_latest - roe_t1
 
         delta_equity = latest_equity / equity_t1 - 1
 
-        delta_equity = '{:.2%}'.format(delta_equity)
+        delta_equity = '{:.1%}'.format(delta_equity)
 
         kpi_summary1, kpi_summary2, kpi_summary3 = st.columns(3)
 
-        kpi_summary1.metric("Activos", f'{latest_assets:,}', delta_assets)
+        kpi_summary1.metric("Activos", f'{latest_assets:,.0f}', delta_assets)
 
-        kpi_summary2.metric("Pasivos", f'{latest_liabilities:,}', delta_liabilities, delta_color = 'inverse')
+        kpi_summary2.metric("Pasivos", f'{latest_liabilities:,.0f}', delta_liabilities, delta_color = 'inverse')
 
-        kpi_summary3.metric("Patrimonio", f'{latest_equity:,}', delta_equity)
+        kpi_summary3.metric("Patrimonio", f'{latest_equity:,.0f}', delta_equity)
 
         # RESUMEN DE LOS ACTIVOS FINANCIEROS
 
         st.subheader('Resumen de los activos financieros')
 
-        total_assets = pd.DataFrame({'año': balance_sheet['year'], 'Activos': balance_sheet['TOTAL ACTIVO']})
+        total_assets = pd.DataFrame({'año': balance_sheet['year'],
+                                     'Activos': balance_sheet['TOTAL ACTIVO'] / 1000})
 
         fig_total_assets = px.bar(total_assets, x = 'año', y = 'Activos',
-                                  labels = {'año': 'Año','Activos': y_scale}, text_auto = '.2s',
+                                  labels = {'año': 'Año','Activos': 'En millones de US$'},
+                                  text_auto = ',.0f',
                                   title = 'Total de activos financieros')
 
         st.plotly_chart(fig_total_assets, use_container_width = True)
@@ -157,13 +171,13 @@ elif sidebar_options == 'Balance General':
         # Composición de los activos financieros
 
         assets_summary = pd.DataFrame({'año': balance_sheet['year'],
-                                     'Activo corriente': balance_sheet['Total activo corriente'],
-                                     'Activo no corriente': balance_sheet['Total activo no corriente']})
+                                     'Activo corriente': balance_sheet['Total activo corriente'] / 1000,
+                                     'Activo no corriente': balance_sheet['Total activo no corriente'] / 1000})
 
         fig_assets = px.bar(assets_summary, x = 'año', y = ['Activo corriente', 'Activo no corriente']
-                          , labels = {'año': 'Año'}, text_auto = '.2s')
+                          , labels = {'año': 'Año'}, text_auto = ',.0f')
 
-        fig_assets.update_layout(yaxis_title = y_scale, title = 'Composición de los activos financieros',
+        fig_assets.update_layout(yaxis_title = 'En millones de US$', title = 'Composición de los activos financieros',
                                  legend = dict(yanchor="top", y=0.99, xanchor="left", x=0.01))
 
         st.plotly_chart(fig_assets, use_container_width = True)
@@ -173,10 +187,11 @@ elif sidebar_options == 'Balance General':
         st.subheader('Resumen de los pasivos financieros')
 
         total_liabilities = pd.DataFrame({'año': balance_sheet['year'],
-                                          'Pasivos': balance_sheet['TOTAL PASIVO']})
+                                          'Pasivos': balance_sheet['TOTAL PASIVO'] / 1000})
 
         fig_total_liabilities = px.bar(total_liabilities, x = 'año', y = 'Pasivos',
-                                  labels = {'año': 'Año','Pasivos': y_scale}, text_auto = '.2s',
+                                  labels = {'año': 'Año','Pasivos': 'En millones de US$'},
+                                       text_auto = ',.0f',
                                   title = 'Total de pasivos financieros')
 
         st.plotly_chart(fig_total_liabilities, use_container_width = True)
@@ -184,16 +199,16 @@ elif sidebar_options == 'Balance General':
         # Composición de los pasivos financieros
 
         liabilities_summary = pd.DataFrame({'año': balance_sheet['year'],
-                                            'Pasivo corriente': balance_sheet['Total pasivo corriente'],
-                                            'Pasivo no corriente': balance_sheet['Total pasivo no corriente']
+                                            'Pasivo corriente': balance_sheet['Total pasivo corriente'] / 1000,
+                                            'Pasivo no corriente': balance_sheet['Total pasivo no corriente'] / 1000
                                             })
 
         fig_liabilities = px.bar(liabilities_summary, x = 'año', y = ['Pasivo corriente',
                                                                       'Pasivo no corriente'],
-                                 labels = {'año': 'Año'}, text_auto = '.2s',
+                                 labels = {'año': 'Año'}, text_auto = ',.0f',
                                  title = 'Composición de los pasivos financieros')
 
-        fig_liabilities.update_layout(yaxis_title = y_scale,
+        fig_liabilities.update_layout(yaxis_title = 'En millones de US$',
                                       legend = dict(yanchor="top", y=0.99, xanchor="left", x=0.01))
 
         st.plotly_chart(fig_liabilities, use_container_width = True)
@@ -203,10 +218,11 @@ elif sidebar_options == 'Balance General':
         st.subheader('Resumen del patrimonio')
 
         total_equity = pd.DataFrame({'año': balance_sheet['year'],
-                                          'Patrimonio': balance_sheet['TOTAL PATRIMONIO']})
+                                          'Patrimonio': balance_sheet['TOTAL PATRIMONIO'] / 1000})
 
         fig_total_equity = px.bar(total_equity, x = 'año', y = 'Patrimonio',
-                                       labels = {'año': 'Año','Patrimonio': y_scale}, text_auto = '.2s',
+                                       labels = {'año': 'Año','Patrimonio': 'En millones de US$'},
+                                  text_auto = ',.0f',
                                        title = 'Total de patrimonio')
 
         st.plotly_chart(fig_total_equity, use_container_width = True)
@@ -221,11 +237,11 @@ elif sidebar_options == 'Balance General':
 
         assets_cash = pd.DataFrame({'año': balance_sheet['year'],
                                     'Efectivo y equivalentes de efectivo':
-            balance_sheet['Efectivo y equivalente de efectivo']})
+            balance_sheet['Efectivo y equivalente de efectivo'] / 1000})
 
         fig_cash = px.bar(assets_cash, x = 'año', y = 'Efectivo y equivalentes de efectivo',
                        labels = {'año': 'Año',
-                                 'Efectivo y equivalentes de efectivo': 'Miles de US$'},
+                                 'Efectivo y equivalentes de efectivo': 'En millones de US$'},
                           title='Efectivo y equivalentes de efectivo', text_auto = '.2s')
 
         st.plotly_chart(fig_cash, use_container_width=True)
@@ -296,7 +312,7 @@ elif sidebar_options == 'Balance General':
 
         fig_prueba_defensiva = px.bar(prueba_defensiva, x = 'año', y = 'Prueba defensiva',
                                   labels = {'año': 'Año', 'Prueba defensiva': 'Número de veces'},
-                                  title='Prueba defensiva', text_auto = '.2%')
+                                  title='Prueba defensiva', text_auto = '.1%')
 
         st.plotly_chart(fig_prueba_defensiva, use_container_width=True)
 
