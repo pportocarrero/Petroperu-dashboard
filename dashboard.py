@@ -18,7 +18,6 @@ avance_pmrt_anterior = 0.9274
 
 delta_avance_pmrt = (avance_pmrt_actual - avance_pmrt_anterior) * 100
 
-
 avance_pmrt_prog_actual = 0.9937
 
 avance_pmrt_prog_anterior = 0.9310
@@ -59,7 +58,7 @@ if sidebar_options == 'Principales indicadores':
 
     kpi_main1, kpi_main2 = st.columns(2)
 
-    kpi_main1.metric('Avance físico de obra', f'{avance_pmrt_actual:,.2%}', str(delta_avance_pmrt) + ' p.p. a/a')
+    kpi_main1.metric('Avance físico de obra', f'{avance_pmrt_actual:,.2%}', f'{delta_avance_pmrt:,.2s}') + ' p.p. a/a')
 
     kpi_main2.metric("Avance programado", f'{avance_pmrt_prog_actual:,.2%}', str(delta_pmrt_prog) + 'p.p. a/a')
 
