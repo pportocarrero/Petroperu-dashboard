@@ -279,6 +279,18 @@ elif sidebar_options == 'Balance General':
 
         # Inventario
 
+        inventario = pd.DataFrame({
+            'año': balance_sheet['year'],
+            'Inventarios': balance_sheet['Inventarios'] / 1000
+        })
+
+        fig_inventario = px.bar(inventario, x = 'año', y = 'Inventarios',
+                                 labels = {'año': 'Año', 'Inventarios': 'En millones de US$'},
+                                 title = 'Inventarios', text_auto = ',.0f'
+                                 )
+
+        st.plotly_chart(fig_inventario, use_container_width = True)
+
         # Otros activos corrientes
 
     # LIABILITIES
