@@ -60,7 +60,7 @@ if sidebar_options == 'Principales indicadores':
 
     kpi_main1.metric('Avance físico de obra', f'{avance_pmrt_actual:,.2%}', f'{delta_avance_pmrt:,.2f}' + ' p.p. a/a')
 
-    kpi_main2.metric("Avance programado", f'{avance_pmrt_prog_actual:,.2%}', f'{delta_pmrt_prog:,.2f}' + 'p.p. a/a')
+    kpi_main2.metric("Avance programado", f'{avance_pmrt_prog_actual:,.2%}', f'{delta_pmrt_prog:,.2f}' + ' p.p. a/a')
 
 # ÚLTIMAS NOTICIAS Y HECHOS DE IMPORTANCIA
 
