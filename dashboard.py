@@ -82,7 +82,10 @@ elif sidebar_options == 'Balance General':
 
     menu_opciones = {'Menú de opciones': ['Resumen',
                                            'Situación de los activos',
-                                           'Situación de los pasivos', 'Análisis de ratios financieros']}
+                                           'Situación de los pasivos',
+                                          'Situación del patrimonio',
+                                          'Análisis de ratios financieros']}
+
     menu_df = pd.DataFrame(menu_opciones)
 
     menu_list = menu_df['Menú de opciones'].unique()
@@ -418,6 +421,10 @@ elif sidebar_options == 'Balance General':
         # Pasivos no corrientes
 
         st.subheader('Pasivos no corrientes')
+
+    elif sidebar_balance == 'Situación del patrimonio':
+
+        st.title('Situación del patrimonio (en MM US$)')
 
     elif sidebar_balance == 'Análisis de ratios financieros':
 
