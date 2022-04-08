@@ -96,7 +96,7 @@ elif sidebar_options == 'Balance General':
     #st.write('Introducir un comentario sobre el análisis horizontal, vertical y de los '
     #         'principales ratios de Petroperú')
 
-    # SUMMARY
+    # RESUMEN
 
     if sidebar_balance == 'Resumen':
 
@@ -243,9 +243,13 @@ elif sidebar_options == 'Balance General':
 
     elif sidebar_balance == 'Situación de los activos':
 
-        st.title('Situación de los activos financieros')
+        st.title('Situación de los activos financieros (en MM US$)')
+
+        # Activo corriente
 
         st.subheader('Activo corriente')
+
+        # Caja
 
         assets_cash = pd.DataFrame({'año': balance_sheet['year'],
                                     'Efectivo y equivalentes de efectivo':
@@ -254,9 +258,28 @@ elif sidebar_options == 'Balance General':
         fig_cash = px.bar(assets_cash, x = 'año', y = 'Efectivo y equivalentes de efectivo',
                        labels = {'año': 'Año',
                                  'Efectivo y equivalentes de efectivo': 'En millones de US$'},
-                          title='Efectivo y equivalentes de efectivo', text_auto = '.2s')
+                          title = 'Efectivo y equivalentes de efectivo', text_auto = '.2s')
 
-        st.plotly_chart(fig_cash, use_container_width=True)
+        st.plotly_chart(fig_cash, use_container_width = True)
+
+        # Cuentas por cobrar
+
+        ctas_cobrar = pd.DataFrame({
+            'año': balance_sheet['year'],
+            'Cuentas por cobrar': (balance_sheet['Efectivo y equivalente de efectivo'] +
+                                  balance_sheet['Otras cuentas por cobrar']) / 1000
+        })
+
+        fig_ctas_cobrar = px.bar(ctas_cobrar, x = 'año', y = 'Cuentas por cobrar',
+                                 labels = {'año': 'Año', 'Cuentas por cobrar': 'En millones de US$'},
+                                 title = 'Cuentas por cobrar'
+                                 )
+
+        st.plotly_chart(fig_ctas_cobrar, use_container_width = True)
+        
+        # Inventario
+
+        # Otros activos corrientes
 
     # LIABILITIES
 
