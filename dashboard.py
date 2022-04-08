@@ -272,10 +272,13 @@ elif sidebar_options == 'Balance General':
 
         fig_ctas_cobrar = px.bar(ctas_cobrar, x = 'año', y = 'Cuentas por cobrar',
                                  labels = {'año': 'Año', 'Cuentas por cobrar': 'En millones de US$'},
-                                 title = 'Cuentas por cobrar', text_auto = ',.0f'
+                                 title = 'Cuentas por cobrar 1/', text_auto = ',.0f'
                                  )
 
         st.plotly_chart(fig_ctas_cobrar, use_container_width = True)
+
+        st.caption('1/ Cuentas por cobrar incluye: (i) Cuentas por cobrar comerciales; y '
+                   '(ii) Otras cuentas por cobrar')
 
         # Inventario
 
@@ -306,6 +309,9 @@ elif sidebar_options == 'Balance General':
 
         st.plotly_chart(fig_otros_act_corr, use_container_width = True)
 
+        st.caption('1/ Otros activos corrientes incluye: (i) Otros activos financieros al costo amortizado; '
+                   '(ii) Otros activos; y (iii) Activos mantenidos para la venta.')
+        
     # LIABILITIES
 
     elif sidebar_balance == 'Situación de los pasivos':
