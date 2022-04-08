@@ -159,11 +159,11 @@ elif sidebar_options == 'Balance General':
 
         kpi_summary1, kpi_summary2, kpi_summary3, kpi_summary4, kpi_summary5 = st.columns(5)
 
-        kpi_summary1.metric("Activos (MM US$)", f'{latest_assets:,.0f}', delta_assets)
+        kpi_summary1.metric("Activos", f'{latest_assets:,.0f}', delta_assets)
 
-        kpi_summary2.metric("Pasivos (MM US$)", f'{latest_liabilities:,.0f}', delta_liabilities, delta_color = 'inverse')
+        kpi_summary2.metric("Pasivos ", f'{latest_liabilities:,.0f}', delta_liabilities, delta_color = 'inverse')
 
-        kpi_summary3.metric("Patrimonio (MM US$)", f'{latest_equity:,.0f}', delta_equity)
+        kpi_summary3.metric("Patrimonio", f'{latest_equity:,.0f}', delta_equity)
 
         kpi_summary4.metric("ROA", f'{roa_latest:,.1%}', delta_roa + ' p.p.')
 
@@ -253,7 +253,7 @@ elif sidebar_options == 'Balance General':
         assets_t1 = balance_sheet['TOTAL ACTIVO'].iloc[-2] / 1000
 
         delta_assets = latest_assets / assets_t1 - 1
-        
+
         activo_corr_latest = balance_sheet['Total activo corriente'].iloc[-1] / 1000
 
         activo_corr_t1 = balance_sheet['Total activo corriente'].iloc[-2] / 1000
