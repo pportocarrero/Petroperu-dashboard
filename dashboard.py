@@ -258,7 +258,7 @@ elif sidebar_options == 'Balance General':
         fig_cash = px.bar(assets_cash, x = 'año', y = 'Efectivo y equivalentes de efectivo',
                        labels = {'año': 'Año',
                                  'Efectivo y equivalentes de efectivo': 'En millones de US$'},
-                          title = 'Efectivo y equivalentes de efectivo', text_auto = '.2s')
+                          title = 'Efectivo y equivalentes de efectivo', text_auto = '.2f')
 
         st.plotly_chart(fig_cash, use_container_width = True)
 
@@ -272,11 +272,11 @@ elif sidebar_options == 'Balance General':
 
         fig_ctas_cobrar = px.bar(ctas_cobrar, x = 'año', y = 'Cuentas por cobrar',
                                  labels = {'año': 'Año', 'Cuentas por cobrar': 'En millones de US$'},
-                                 title = 'Cuentas por cobrar'
+                                 title = 'Cuentas por cobrar', text_auto = '.2f'
                                  )
 
         st.plotly_chart(fig_ctas_cobrar, use_container_width = True)
-        
+
         # Inventario
 
         # Otros activos corrientes
