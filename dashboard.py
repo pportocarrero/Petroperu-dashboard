@@ -8,11 +8,11 @@ import pandas as pd
 # LOAD SOME DATA
 #os.chdir('C:/Users/pport/MINISTERIO DE ECONOMIA Y FINANZAS/DPFE - DGTP - Pedro - MEF - Pedro - MEF/pportocarrero.MEF/Proyectos/Petroperu/Petroperu dashboard/')
 
-os.chdir('/Users/pport/MINISTERIO DE ECONOMIA Y FINANZAS/DPFE - DGTP - Pedro - MEF - Pedro - MEF/pportocarrero.MEF/Proyectos/Petroperu/Petroperu dashboard/')
+#os.chdir('/Users/pport/MINISTERIO DE ECONOMIA Y FINANZAS/DPFE - DGTP - Pedro - MEF - Pedro - MEF/pportocarrero.MEF/Proyectos/Petroperu/Petroperu dashboard/')
 
-balance_sheet = pd.read_csv('balance_sheet_annual2.csv', delimiter = ';')
+balance_sheet = pd.read_csv('C:/Users/pport/MINISTERIO DE ECONOMIA Y FINANZAS/DPFE - DGTP - Pedro - MEF - Pedro - MEF/pportocarrero.MEF/Proyectos/Petroperu/Petroperu dashboard/balance_sheet_annual2.csv', delimiter = ';')
 
-income_statement = pd.read_csv('income_statement.csv', delimiter = ';')
+income_statement = pd.read_csv('C:/Users/pport/MINISTERIO DE ECONOMIA Y FINANZAS/DPFE - DGTP - Pedro - MEF - Pedro - MEF/pportocarrero.MEF/Proyectos/Petroperu/Petroperu dashboard/income_statement.csv', delimiter = ';')
 
 # DEFINITIONS
 
