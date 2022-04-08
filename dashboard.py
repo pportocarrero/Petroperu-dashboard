@@ -72,7 +72,7 @@ elif sidebar_options == 'Balance General':
                                            'Situación de los pasivos', 'Análisis de ratios financieros']}
     menu_df = pd.DataFrame(menu_opciones)
 
-    menu_list = types_df['Menú de opciones'].unique()
+    menu_list = menu_df['Menú de opciones'].unique()
 
     sidebar_balance = st.sidebar.selectbox('Seleccione una opción:', menu_list)
 
