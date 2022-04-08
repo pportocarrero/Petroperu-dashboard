@@ -59,7 +59,6 @@ elif sidebar_options == 'Últimas noticias y hechos de importancia':
 
     st.write('Escribir lo último sobre Petroperú')
 
-
 elif sidebar_options == 'Balance General':
 
     # GET BALANCE SHEET DATA
@@ -68,10 +67,14 @@ elif sidebar_options == 'Balance General':
 
     # OPTIONS TO VISUALIZE ASSETS
 
-    balance_list = {'Resumen', 'Situación de los activos', 'Situación de los pasivos',
-                    'Análisis de ratios financieros'}
+    menu_opciones = {'Menú de opciones': ['Resumen',
+                                           'Situación de los activos',
+                                           'Situación de los pasivos', 'Análisis de ratios financieros']}
+    menu_df = pd.DataFrame(menu_opciones)
 
-    sidebar_balance = st.sidebar.selectbox('Seleccione una opción:', balance_list)
+    menu_list = types_df['Menú de opciones'].unique()
+
+    sidebar_balance = st.sidebar.selectbox('Seleccione una opción:', menu_list)
 
     # TITLE
 
