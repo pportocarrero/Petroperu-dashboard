@@ -3,8 +3,6 @@
 
 import streamlit as st
 import os
-from plotly.subplots import make_subplots
-from streamlit_metrics import metric, metric_row
 import plotly.express as px
 import pandas as pd
 
@@ -134,25 +132,33 @@ elif sidebar_options == 'Balance General':
 
         roa_t1 = income_statement['Total resultados integrales'].iloc[-2] / balance_sheet['TOTAL ACTIVO'].iloc[-2]
 
-        delta_roa = roa_latest - roa_t1
+        delta_roa = (roa_latest - roa_t1) * 100
+
+        delta_roa = '{:.1f}'.format(delta_roa)
 
         roe_latest = income_statement['Total resultados integrales'].iloc[-1] / balance_sheet['TOTAL PATRIMONIO'].iloc[-1]
 
         roe_t1 = income_statement['Total resultados integrales'].iloc[-2] / balance_sheet['TOTAL PATRIMONIO'].iloc[-2]
 
-        delta_roe = roe_latest - roe_t1
+        delta_roe = (roe_latest - roe_t1) * 100
+
+        delta_roe = '{:.1f}'.format(delta_roe)
 
         delta_equity = latest_equity / equity_t1 - 1
 
         delta_equity = '{:.1%}'.format(delta_equity)
 
-        kpi_summary1, kpi_summary2, kpi_summary3 = st.columns(3)
+        kpi_summary1, kpi_summary2, kpi_summary3, kpi_summary4, kpi_summary5 = st.columns(5)
 
         kpi_summary1.metric("Activos", f'{latest_assets:,.0f}', delta_assets)
 
         kpi_summary2.metric("Pasivos", f'{latest_liabilities:,.0f}', delta_liabilities, delta_color = 'inverse')
 
         kpi_summary3.metric("Patrimonio", f'{latest_equity:,.0f}', delta_equity)
+
+        kpi_summary4.metric("ROA", f'{roa_latest:,.1%}', delta_roa + ' p.p.')
+
+        kpi_summary5.metric("ROE", f'{roe_latest:,.1%}', delta_roe + ' p.p.')
 
         # RESUMEN DE LOS ACTIVOS FINANCIEROS
 
