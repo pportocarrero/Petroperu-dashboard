@@ -137,6 +137,10 @@ elif sidebar_options == 'Balance General':
 
         equity_t1 = balance_sheet['TOTAL PATRIMONIO'].iloc[-2] / 1000
 
+        delta_equity = latest_equity / equity_t1 - 1
+
+        delta_equity = '{:.1%}'.format(delta_equity)
+
         roa_latest = income_statement['Total resultados integrales'].iloc[-1] / balance_sheet['TOTAL ACTIVO'].iloc[-1]
 
         roa_t1 = income_statement['Total resultados integrales'].iloc[-2] / balance_sheet['TOTAL ACTIVO'].iloc[-2]
@@ -152,10 +156,6 @@ elif sidebar_options == 'Balance General':
         delta_roe = (roe_latest - roe_t1) * 100
 
         delta_roe = '{:.1f}'.format(delta_roe)
-
-        delta_equity = latest_equity / equity_t1 - 1
-
-        delta_equity = '{:.1%}'.format(delta_equity)
 
         kpi_summary1, kpi_summary2, kpi_summary3, kpi_summary4, kpi_summary5 = st.columns(5)
 
@@ -247,6 +247,8 @@ elif sidebar_options == 'Balance General':
     elif sidebar_balance == 'Situación de los activos':
 
         st.title('Situación de los activos financieros (en MM US$)')
+
+        # SOME KPI's
 
         latest_assets = balance_sheet['TOTAL ACTIVO'].iloc[-1] / 1000
 
@@ -405,6 +407,8 @@ elif sidebar_options == 'Balance General':
 
     elif sidebar_balance == 'Situación de los pasivos':
 
+        # SOME KPI's
+
         st.title('Situación de los pasivos financieros (en MM US$)')
 
         latest_liabilities = balance_sheet['TOTAL PASIVO'].iloc[-1] / 1000
@@ -521,10 +525,52 @@ elif sidebar_options == 'Balance General':
         st.caption('1/ Cuentas por pagar incluye: (i) Otros pasivos financieros no corrientes; '
                    '(ii) Provisiones; y (iii) Pasivos por arrendamientos no corrientes.')
 
+    # EQUITY
+
     elif sidebar_balance == 'Situación del patrimonio':
 
         st.title('Situación del patrimonio (en MM US$)')
 
+        # SOME KPI's
+
+        latest_equity = balance_sheet['TOTAL PATRIMONIO'].iloc[-1] / 1000
+
+        equity_t1 = balance_sheet['TOTAL PATRIMONIO'].iloc[-2] / 1000
+
+        delta_equity = latest_equity / equity_t1 - 1
+
+        delta_equity = '{:.1%}'.format(delta_equity)
+
+        capital_latest = (balance_sheet['Capital social'].iloc[-1] +
+                          balance_sheet['Capital adicional'].iloc[-1]) / 1000
+
+        capital_t1 = (balance_sheet['Capital social'].iloc[-2] +
+                          balance_sheet['Capital adicional'].iloc[-2]) / 1000
+
+        delta_capital = capital_latest / capital_t1 - 1
+
+        resultados_latest = balance_sheet['Resultados acumulados'].iloc[-1] / 1000
+
+        resultados_t1 = balance_sheet['Resultados acumulados'].iloc[-2] / 1000
+
+        delta_resultados = resultados_latest / resultados_t1 - 1
+
+        kpi_equity1, kpi_equity2, kpi_equity3 = st.columns(3)
+
+        kpi_equity1.metric("Patrimonio (MM US$)", f'{latest_equity:,.0f}', delta_equity)
+
+        kpi_equity2.metric("Capital (MM US$)", f'{capital_latest:,.0f}', delta_capital)
+
+        kpi_equity3.metric("Resultados acumulados (MM US$)", f'{resultados_latest:,.0f}', delta_resultados)
+
+        # Capital
+
+        # Reserva legal
+
+        # Resultados acumulados
+
+        # Otras reservas del patrimonio
+        
     elif sidebar_balance == 'Análisis de ratios financieros':
 
         st.title('Análisis de ratios financieros')
