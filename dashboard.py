@@ -304,14 +304,32 @@ elif sidebar_options == 'Balance General':
 
         fig_otros_act_corr = px.bar(otros_act_corr, x = 'año', y = 'Otros activos corrientes',
                                  labels = {'año': 'Año', 'Otros activos corrientes': 'En millones de US$'},
-                                 title = 'Otros activos corrientes', text_auto = ',.0f'
+                                 title = 'Otros activos corrientes 1/', text_auto = ',.0f'
                                  )
 
         st.plotly_chart(fig_otros_act_corr, use_container_width = True)
 
         st.caption('1/ Otros activos corrientes incluye: (i) Otros activos financieros al costo amortizado; '
                    '(ii) Otros activos; y (iii) Activos mantenidos para la venta.')
+
+        # Activo no corriente
+
+        st.subheader('Activo no corriente')
         
+        # Propiedad, planta y equipo
+        
+        prop_plant_eq = pd.DataFrame({
+            'año': balance_sheet['year'],
+            'Propiedad, planta y equipo': balance_sheet['Propiedad, planta y equipo'] / 1000
+        })
+
+        fig_prop_plant_eq = px.bar(prop_plant_eq, x = 'año', y = 'Propiedad, planta y equipo',
+                                labels = {'año': 'Año', 'Propiedad, planta y equipo': 'En millones de US$'},
+                                title = 'Propiedad, planta y equipo', text_auto = ',.0f'
+                                )
+
+        st.plotly_chart(fig_prop_plant_eq, use_container_width = True)
+
     # LIABILITIES
 
     elif sidebar_balance == 'Situación de los pasivos':
