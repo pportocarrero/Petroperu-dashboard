@@ -266,7 +266,7 @@ elif sidebar_options == 'Balance General':
 
         ctas_cobrar = pd.DataFrame({
             'año': balance_sheet['year'],
-            'Cuentas por cobrar': (balance_sheet['Efectivo y equivalente de efectivo'] +
+            'Cuentas por cobrar': (balance_sheet['Cuentas por cobrar comerciales'] +
                                   balance_sheet['Otras cuentas por cobrar']) / 1000
         })
 
