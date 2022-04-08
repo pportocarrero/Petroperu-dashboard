@@ -262,9 +262,15 @@ elif sidebar_options == 'Balance General':
 
         delta_act_corr = activo_corr_latest - activo_corr_t1
 
+        delta_act_corr = '{:.1%}'.format(delta_act_corr)
+
         activo_no_corr_latest = balance_sheet['Total activo no corriente'].iloc[-1] / 1000
 
         activo_no_corr_t1 = balance_sheet['Total activo no corriente'].iloc[-2] / 1000
+
+        delta_act_no_corr = activo_no_corr_latest - activo_no_corr_t1
+
+        delta_act_no_corr = '{:.1%}'.format(delta_act_no_corr)
 
         kpi_assets1, kpi_assets2, kpi_assets3 = st.columns(3)
 
@@ -272,7 +278,7 @@ elif sidebar_options == 'Balance General':
 
         kpi_assets2.metric('Activos corrientes (MM US$)', f'{activo_corr_latest:,.0f}', delta_act_corr)
 
-        kpi_assets3.metric('Activos no corrientes (MM US$)', f'{activo_no_corr_latest:,.0f}', activo_no_corr_t1)
+        kpi_assets3.metric('Activos no corrientes (MM US$)', f'{activo_no_corr_latest:,.0f}', delta_act_no_corr)
 
         # Activo corriente
 
