@@ -248,6 +248,12 @@ elif sidebar_options == 'Balance General':
 
         st.title('Situación de los activos financieros (en MM US$)')
 
+        latest_assets = balance_sheet['TOTAL ACTIVO'].iloc[-1] / 1000
+
+        assets_t1 = balance_sheet['TOTAL ACTIVO'].iloc[-2] / 1000
+
+        delta_assets = latest_assets / assets_t1 - 1
+        
         activo_corr_latest = balance_sheet['Total activo corriente'].iloc[-1] / 1000
 
         activo_corr_t1 = balance_sheet['Total activo corriente'].iloc[-2] / 1000
