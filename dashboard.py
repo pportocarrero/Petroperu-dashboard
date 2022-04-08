@@ -260,7 +260,7 @@ elif sidebar_options == 'Balance General':
 
         activo_corr_t1 = balance_sheet['Total activo corriente'].iloc[-2] / 1000
 
-        delta_act_corr = activo_corr_latest - activo_corr_t1
+        delta_act_corr = activo_corr_latest / activo_corr_t1 - 1
 
         delta_act_corr = '{:.1%}'.format(delta_act_corr)
 
@@ -268,7 +268,7 @@ elif sidebar_options == 'Balance General':
 
         activo_no_corr_t1 = balance_sheet['Total activo no corriente'].iloc[-2] / 1000
 
-        delta_act_no_corr = activo_no_corr_latest - activo_no_corr_t1
+        delta_act_no_corr = activo_no_corr_latest / activo_no_corr_t1 - 1
 
         delta_act_no_corr = '{:.1%}'.format(delta_act_no_corr)
 
