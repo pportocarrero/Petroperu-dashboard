@@ -334,7 +334,7 @@ elif sidebar_options == 'Balance General':
 
         otras_ctas_cobrar = pd.DataFrame({
             'año': balance_sheet['year'],
-            'Otras cuentas por cobrar': balance_sheet['Otras cuentas por cobrar'] / 1000
+            'Otras cuentas por cobrar': balance_sheet['Otras cuentas por cobrar no corrientes'] / 1000
         })
 
         fig_otras_ctas_cobrar = px.bar(otras_ctas_cobrar, x = 'año', y = 'Otras cuentas por cobrar',
