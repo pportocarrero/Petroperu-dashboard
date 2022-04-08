@@ -549,11 +549,15 @@ elif sidebar_options == 'Balance General':
 
         delta_capital = capital_latest / capital_t1 - 1
 
+        delta_capital = '{:.1%}'.format(delta_capital)
+
         resultados_latest = balance_sheet['Resultados acumulados'].iloc[-1] / 1000
 
         resultados_t1 = balance_sheet['Resultados acumulados'].iloc[-2] / 1000
 
         delta_resultados = resultados_latest / resultados_t1 - 1
+
+        delta_resultados = '{:.1%}'.format(delta_resultados)
 
         kpi_equity1, kpi_equity2, kpi_equity3 = st.columns(3)
 
@@ -570,7 +574,7 @@ elif sidebar_options == 'Balance General':
         # Resultados acumulados
 
         # Otras reservas del patrimonio
-        
+
     elif sidebar_balance == 'Análisis de ratios financieros':
 
         st.title('Análisis de ratios financieros')
