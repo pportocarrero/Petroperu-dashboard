@@ -410,7 +410,7 @@ elif sidebar_options == 'Balance General':
         fig_otros_pasivos = px.bar(otros_pasivos, x = 'año', y = 'Otros pasivos financieros',
                                 labels = {'año': 'Año',
                                           'Otros pasivos financieros': 'En millones de US$'},
-                                title = 'COtros pasivos financieros 1/', text_auto = ',.0f'
+                                title = 'Otros pasivos financieros 1/', text_auto = ',.0f'
                                 )
 
         st.plotly_chart(fig_otros_pasivos, use_container_width = True)
@@ -421,6 +421,41 @@ elif sidebar_options == 'Balance General':
         # Pasivos no corrientes
 
         st.subheader('Pasivos no corrientes')
+
+        # Pasivos por impuestos diferidos
+
+        impuestos_diferidos = pd.DataFrame({
+            'año': balance_sheet['year'],
+            'Pasivos por impuestos diferidos': balance_sheet['Pasivos por impuestos diferidos'] / 1000
+        })
+
+        fig_impuestos_diferidos = px.bar(impuestos_diferidos, x = 'año', y = 'Pasivos por impuestos diferidos',
+                                   labels = {'año': 'Año',
+                                             'Pasivos por impuestos diferidos': 'En millones de US$'},
+                                   title = 'Pasivos por impuestos diferidos', text_auto = ',.0f'
+                                   )
+
+        st.plotly_chart(fig_impuestos_diferidos, use_container_width = True)
+
+        # Otros pasivos no corrientes
+
+        otros_pasivos_no_corr = pd.DataFrame({
+            'año': balance_sheet['year'],
+            'Otros pasivos no corrientes': (balance_sheet['Otros pasivos financieros no corrientes'] +
+                                          balance_sheet['Provisiones'] +
+                                          balance_sheet['Pasivos por arrendamientos no corrientes']) / 1000
+        })
+
+        fig_otros_pasivos_no_corr = px.bar(otros_pasivos_no_corr, x = 'año', y = 'Otros pasivos no corrientes',
+                                   labels = {'año': 'Año',
+                                             'Otros pasivos no corrientes': 'En millones de US$'},
+                                   title = 'Otros pasivos no corrientes 1/', text_auto = ',.0f'
+                                   )
+
+        st.plotly_chart(fig_otros_pasivos_no_corr, use_container_width = True)
+
+        st.caption('1/ Cuentas por pagar incluye: (i) Otros pasivos financieros no corrientes; '
+                   '(ii) Provisiones; y (iii) Pasivos por arrendamientos no corrientes.')
 
     elif sidebar_balance == 'Situación del patrimonio':
 
