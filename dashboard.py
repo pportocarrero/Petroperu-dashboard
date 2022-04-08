@@ -13,8 +13,6 @@ income_statement = pd.read_csv('income_statement.csv', delimiter = ';')
 
 # DEFINITIONS
 
-y_scale = 'En miles de US$'
-
 # SIDEBAR
 
 fin_stmt = {'Información financiera': ['Principales indicadores',
@@ -23,7 +21,9 @@ fin_stmt = {'Información financiera': ['Principales indicadores',
                                        'Flujo de efectivo']}
 
 types_df = pd.DataFrame(fin_stmt)
+
 clist = types_df['Información financiera'].unique()
+
 sidebar_options = st.sidebar.selectbox('Seleccione la información a visualizar:', clist)
 
 # RESUMEN DE INDICADORES
@@ -59,13 +59,6 @@ elif sidebar_options == 'Últimas noticias y hechos de importancia':
 
     st.write('Escribir lo último sobre Petroperú')
 
-    st.metric(label="Avance físico de obra", value="96.8%", delta="4.1%")
-
-    kpi_latest1, kpi_latest2 = st.columns(2)
-
-    kpi_latest1.metric("Avance físico de obra", "96.79%", "4.05%")
-
-    kpi_latest2.metric("Avance programado", "99.37%", "6.27%")
 
 elif sidebar_options == 'Balance General':
 
