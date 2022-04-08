@@ -293,6 +293,19 @@ elif sidebar_options == 'Balance General':
 
         # Otros activos corrientes
 
+        otros_act_corr = pd.DataFrame({
+            'año': balance_sheet['year'],
+            'Otros activos corrientes': (balance_sheet['Otros activos financieros al costo amortizado'] +
+                                   balance_sheet['Otros activos'] + balance_sheet['Activos mantenidos para la venta']) / 1000
+        })
+
+        fig_otros_act_corr = px.bar(otros_act_corr, x = 'año', y = 'Otros activos corrientes',
+                                 labels = {'año': 'Año', 'Otros activos corrientes': 'En millones de US$'},
+                                 title = 'Otros activos corrientes', text_auto = ',.0f'
+                                 )
+
+        st.plotly_chart(fig_otros_act_corr, use_container_width = True)
+
     # LIABILITIES
 
     elif sidebar_balance == 'Situación de los pasivos':
