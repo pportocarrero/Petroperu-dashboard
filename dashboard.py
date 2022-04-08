@@ -330,6 +330,20 @@ elif sidebar_options == 'Balance General':
 
         st.plotly_chart(fig_prop_plant_eq, use_container_width = True)
 
+        # Otras cuentas por cobrar
+
+        otras_ctas_cobrar = pd.DataFrame({
+            'año': balance_sheet['year'],
+            'Otras cuentas por cobrar': balance_sheet['Otras cuentas por cobrar'] / 1000
+        })
+
+        fig_otras_ctas_cobrar = px.bar(otras_ctas_cobrar, x = 'año', y = 'Otras cuentas por cobrar',
+                                   labels = {'año': 'Año', 'Otras cuentas por cobrar': 'En millones de US$'},
+                                   title = 'Otras cuentas por cobrar', text_auto = ',.0f'
+                                   )
+
+        st.plotly_chart(fig_otras_ctas_cobrar, use_container_width = True)
+
     # LIABILITIES
 
     elif sidebar_balance == 'Situación de los pasivos':
