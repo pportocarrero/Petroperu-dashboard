@@ -14,21 +14,21 @@ income_statement = pd.read_csv('income_statement.csv', delimiter = ';')
 
 avance_pmrt_actual = 0.9679
 
-avance_pmrt_actual = '{:.2%}'.format(avance_pmrt_actual)
+avance_pmrt_actual = '{:,.2%}'.format(avance_pmrt_actual)
 
 avance_pmrt_anterior = 0.9274
 
-avance_pmrt_anterior = '{:.2%}'.format(avance_pmrt_anterior)
+avance_pmrt_anterior = '{:,.2%}'.format(avance_pmrt_anterior)
 
 delta_avance_pmrt = avance_pmrt_actual - avance_pmrt_anterior
 
 avance_pmrt_prog_actual = 0.9937
 
-avance_pmrt_prog_actual = '{:.2%}'.format(avance_pmrt_prog_actual)
+avance_pmrt_prog_actual = '{:,.2%}'.format(avance_pmrt_prog_actual)
 
 avance_pmrt_prog_anterior = 0.9310
 
-avance_pmrt_prog_anterior = '{:.2%}'.format(avance_pmrt_prog_anterior)
+avance_pmrt_prog_anterior = '{:,.2%}'.format(avance_pmrt_prog_anterior)
 
 delta_pmrt_prog = avance_pmrt_prog_actual - avance_pmrt_prog_anterior
 
