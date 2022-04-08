@@ -6,7 +6,9 @@ import plotly.express as px
 import pandas as pd
 
 # LOAD SOME DATA
-os.chdir('C:/Users/pport/MINISTERIO DE ECONOMIA Y FINANZAS/DPFE - DGTP - Pedro - MEF - Pedro - MEF/pportocarrero.MEF/Proyectos/Petroperu/Petroperu dashboard/')
+#os.chdir('C:/Users/pport/MINISTERIO DE ECONOMIA Y FINANZAS/DPFE - DGTP - Pedro - MEF - Pedro - MEF/pportocarrero.MEF/Proyectos/Petroperu/Petroperu dashboard/')
+
+os.chdir('/Users/pport/MINISTERIO DE ECONOMIA Y FINANZAS/DPFE - DGTP - Pedro - MEF - Pedro - MEF/pportocarrero.MEF/Proyectos/Petroperu/Petroperu dashboard/')
 
 balance_sheet = pd.read_csv('balance_sheet_annual2.csv', delimiter = ';')
 
