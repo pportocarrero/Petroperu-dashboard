@@ -251,7 +251,7 @@ elif sidebar_options == 'Balance General':
 
         st.title('Situación de los pasivos financieros')
 
-        st.text('Hola')
+        st.text('Pronto')
 
     elif sidebar_balance == 'Análisis de ratios financieros':
 
