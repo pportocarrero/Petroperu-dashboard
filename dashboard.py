@@ -70,6 +70,8 @@ elif sidebar_options == 'Últimas noticias y hechos de importancia':
 
     st.write('Escribir lo último sobre Petroperú')
 
+# BALANCE GENERAL
+
 elif sidebar_options == 'Balance General':
 
     # GET BALANCE SHEET DATA
@@ -102,7 +104,7 @@ elif sidebar_options == 'Balance General':
 
         latest_year = balance_sheet['year'].iloc[-1]
 
-        st.title('Resumen del Balance General de Petroperú al ' + str(latest_year) + ' (en millones de US$)')
+        st.title('Resumen del Balance General de Petroperú al ' + str(latest_year))
 
         balance_sheet_summary = pd.DataFrame({'año': balance_sheet['year'],
                                               'Activos': balance_sheet['TOTAL ACTIVO'],
@@ -154,11 +156,11 @@ elif sidebar_options == 'Balance General':
 
         kpi_summary1, kpi_summary2, kpi_summary3, kpi_summary4, kpi_summary5 = st.columns(5)
 
-        kpi_summary1.metric("Activos", f'{latest_assets:,.0f}', delta_assets)
+        kpi_summary1.metric("Activos (MM US$)", f'{latest_assets:,.0f}', delta_assets)
 
-        kpi_summary2.metric("Pasivos", f'{latest_liabilities:,.0f}', delta_liabilities, delta_color = 'inverse')
+        kpi_summary2.metric("Pasivos (MM US$)", f'{latest_liabilities:,.0f}', delta_liabilities, delta_color = 'inverse')
 
-        kpi_summary3.metric("Patrimonio", f'{latest_equity:,.0f}', delta_equity)
+        kpi_summary3.metric("Patrimonio (MM US$)", f'{latest_equity:,.0f}', delta_equity)
 
         kpi_summary4.metric("ROA", f'{roa_latest:,.1%}', delta_roa + ' p.p.')
 
@@ -619,17 +621,23 @@ elif sidebar_options == 'Balance General':
         st.latex(r'''ROA\;(Return\;over\;equity) = \frac{Resultado\;neto}{Patrimonio}\%
         ''')
 
+# ESTADO DE RESULTADOS
+
 elif sidebar_options == 'Estado de Resultados':
 
     st.title('Análisis de los Estados Financieros de Petroperú')
 
     st.write('Introducir algún comentario sobre los Estados financieros de Petroperú')
 
+# FLUJO DE EFECTIVO
+
 elif sidebar_options == 'Flujo de efectivo':
 
     st.title('Análisis del flujo de efectivo de Petroperú')
 
     st.write('Introducir algún comentario sobre el Flujo de efectivo de Petroperú')
+
+# NORMAS LEGALES
 
 elif sidebar_options == 'Normas legales':
 
