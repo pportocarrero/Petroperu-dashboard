@@ -1,7 +1,6 @@
 
 # IMPORT CONFIGURATIONS
 import streamlit as st
-import os
 import plotly.express as px
 import pandas as pd
 
@@ -12,6 +11,18 @@ balance_sheet = pd.read_csv('balance_sheet_annual2.csv', delimiter = ';')
 income_statement = pd.read_csv('income_statement.csv', delimiter = ';')
 
 # DEFINITIONS
+
+avance_pmrt_actual = '96.79%'
+
+avance_pmrt_anterior = '92.74%'
+
+delta_avance_pmrt = avance_pmrt_actual - avance_pmrt_anterior
+
+avance_pmrt_prog_actual = '99,37%'
+
+avance_pmrt_prog_anterior = '93.10%'
+
+delta_pmrt_prog = avance_pmrt_prog_actual - avance_pmrt_prog_anterior
 
 # SIDEBAR
 
@@ -47,9 +58,9 @@ if sidebar_options == 'Principales indicadores':
 
     kpi_main1, kpi_main2 = st.columns(2)
 
-    kpi_main1.metric("Avance físico de obra", "96.79%", "4.05% a/a")
+    kpi_main1.metric('Avance físico de obra', avance_pmrt_actual, delta_avance_pmrt + ' p.p. a/a')
 
-    kpi_main2.metric("Avance programado", "99.37%", "6.27% a/a")
+    kpi_main2.metric("Avance programado", avance_pmrt_prog_actual, delta_pmrt_prog + 'p.p. a/a')
 
 # ÚLTIMAS NOTICIAS Y HECHOS DE IMPORTANCIA
 
