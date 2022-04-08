@@ -248,6 +248,24 @@ elif sidebar_options == 'Balance General':
 
         st.title('Situación de los activos financieros (en MM US$)')
 
+        activo_corr_latest = balance_sheet['Total activo corriente'].iloc[-1] / 1000
+
+        activo_corr_t1 = balance_sheet['Total activo corriente'].iloc[-2] / 1000
+
+        delta_act_corr = activo_corr_latest - activo_corr_t1
+
+        activo_no_corr_latest = balance_sheet['Total activo no corriente'].iloc[-1] / 1000
+
+        activo_no_corr_t1 = balance_sheet['Total activo no corriente'].iloc[-2] / 1000
+
+        kpi_assets1, kpi_assets2, kpi_assets3 = st.columns(3)
+
+        kpi_assets1.metric("Activos (MM US$)", f'{latest_assets:,.0f}', delta_assets)
+
+        kpi_assets2.metric('Activos corrientes (MM US$)', f'{activo_corr_latest:,.0f}', delta_act_corr)
+
+        kpi_assets3.metric('Activos no corrientes (MM US$)', f'{activo_no_corr_latest:,.0f}', activo_no_corr_t1)
+
         # Activo corriente
 
         st.subheader('Activo corriente')
