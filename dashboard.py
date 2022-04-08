@@ -159,11 +159,11 @@ elif sidebar_options == 'Balance General':
 
         kpi_summary1, kpi_summary2, kpi_summary3, kpi_summary4, kpi_summary5 = st.columns(5)
 
-        kpi_summary1.metric("Activos", f'{latest_assets:,.0f}', delta_assets)
+        kpi_summary1.metric("Activos (MM US$)", f'{latest_assets:,.0f}', delta_assets)
 
-        kpi_summary2.metric("Pasivos ", f'{latest_liabilities:,.0f}', delta_liabilities, delta_color = 'inverse')
+        kpi_summary2.metric("Pasivos (MM US$)", f'{latest_liabilities:,.0f}', delta_liabilities, delta_color = 'inverse')
 
-        kpi_summary3.metric("Patrimonio", f'{latest_equity:,.0f}', delta_equity)
+        kpi_summary3.metric("Patrimonio (MM US$)", f'{latest_equity:,.0f}', delta_equity)
 
         kpi_summary4.metric("ROA", f'{roa_latest:,.1%}', delta_roa + ' p.p.')
 
@@ -406,6 +406,38 @@ elif sidebar_options == 'Balance General':
     elif sidebar_balance == 'Situación de los pasivos':
 
         st.title('Situación de los pasivos financieros (en MM US$)')
+
+        latest_liabilities = balance_sheet['TOTAL PASIVO'].iloc[-1] / 1000
+
+        liabilities_t1 = balance_sheet['TOTAL PASIVO'].iloc[-2] / 1000
+
+        delta_liabilities = latest_liabilities / liabilities_t1 - 1
+
+        delta_liabilities = '{:.1%}'.format(delta_liabilities)
+
+        pasivos_corr_latest = balance_sheet['Total pasivo corriente'].iloc[-1] / 1000
+
+        pasivos_corr_t1 = balance_sheet['Total pasivo corriente'].iloc[-2] / 1000
+
+        delta_pas_corr = pasivos_corr_latest / pasivos_corr_t1 - 1
+
+        delta_pas_corr = '{:.1%}'.format(delta_pas_corr)
+
+        pasivos_no_corr_latest = balance_sheet['Total pasivo no corriente'].iloc[-1] / 1000
+
+        pasivos_no_corr_t1 = balance_sheet['Total pasivo no corriente'].iloc[-2] / 1000
+
+        delta_pas_no_corr = pasivos_no_corr_latest / pasivos_no_corr_t1 - 1
+
+        delta_pas_no_corr = '{:.1%}'.format(delta_pas_no_corr)
+
+        kpi_liab1, kpi_liab2, kpi_liab3 = st.columns(3)
+
+        kpi_liab1.metric("Pasivos (MM US$)", f'{latest_liabilities:,.0f}', delta_liabilities, delta_color = 'inverse')
+
+        kpi_liab2.metric("Pasivos corrientes (MM US$)", f'{pasivos_corr_latest:,.0f}', delta_pas_corr, delta_color = 'inverse')
+
+        kpi_liab3.metric("Pasivos no corrientes (MM US$)", f'{pasivos_no_corr_latest:,.0f}', delta_pas_no_corr, delta_color = 'inverse')
 
         # Pasivos corrientes
 
