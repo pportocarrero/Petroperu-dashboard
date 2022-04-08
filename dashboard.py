@@ -254,6 +254,8 @@ elif sidebar_options == 'Balance General':
 
         delta_assets = latest_assets / assets_t1 - 1
 
+        delta_assets = '{:.1%}'.format(delta_assets)
+
         activo_corr_latest = balance_sheet['Total activo corriente'].iloc[-1] / 1000
 
         activo_corr_t1 = balance_sheet['Total activo corriente'].iloc[-2] / 1000
