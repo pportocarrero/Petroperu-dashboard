@@ -349,7 +349,7 @@ elif sidebar_options == 'Balance General':
         otros_act_no_corr = pd.DataFrame({
             'año': balance_sheet['year'],
             'Otros activos no corrientes': (balance_sheet['Otros activos no corrientes'] +
-                                            balance_sheet['Propiedades de inversiòn'] +
+                                            balance_sheet['Propiedades de inversión'] +
                                             balance_sheet['Activos intangibles'] +
                                             balance_sheet['Activos por derecho de uso']) / 1000
         })
