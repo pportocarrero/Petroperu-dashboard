@@ -357,10 +357,14 @@ elif sidebar_options == 'Balance General':
         fig_otros_act_no_corr = px.bar(otros_act_no_corr, x = 'año', y = 'Otros activos no corrientes',
                                        labels = {'año': 'Año',
                                                  'Otros activos no corrientes': 'En millones de US$'},
-                                       title = 'Otros activos no corrientes', text_auto = ',.0f'
+                                       title = 'Otros activos no corrientes 1/', text_auto = ',.0f'
                                        )
 
         st.plotly_chart(fig_otros_act_no_corr, use_container_width = True)
+
+        st.caption('1/ Otros activos no corrientes incluye: (i) Otros activos no corrientes; '
+                   '(ii) Propiedades de inversión; (iii) Activos intangibles; y '
+                   '(iv) Activos por derecho de uso.')
 
     # LIABILITIES
 
