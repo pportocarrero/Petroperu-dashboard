@@ -1,6 +1,5 @@
 
 # IMPORT CONFIGURATIONS
-
 import streamlit as st
 import os
 import plotly.express as px
