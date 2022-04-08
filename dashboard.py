@@ -344,6 +344,24 @@ elif sidebar_options == 'Balance General':
 
         st.plotly_chart(fig_otras_ctas_cobrar, use_container_width = True)
 
+        # Otros activos no corrientes
+
+        otros_act_no_corr = pd.DataFrame({
+            'año': balance_sheet['year'],
+            'Otros activos no corrientes': (balance_sheet['Otros activos no corrientes'] +
+                                            balance_sheet['Propiedades de inversiòn'] +
+                                            balance_sheet['Activos intangibles'] +
+                                            balance_sheet['Activos por derecho de uso']) / 1000
+        })
+
+        fig_otros_act_no_corr = px.bar(otros_act_no_corr, x = 'año', y = 'Otros activos no corrientes',
+                                       labels = {'año': 'Año',
+                                                 'Otros activos no corrientes': 'En millones de US$'},
+                                       title = 'Otros activos no corrientes', text_auto = ',.0f'
+                                       )
+
+        st.plotly_chart(fig_otros_act_no_corr, use_container_width = True)
+
     # LIABILITIES
 
     elif sidebar_balance == 'Situación de los pasivos':
