@@ -24,6 +24,14 @@ avance_pmrt_prog_anterior = 0.9310
 
 delta_pmrt_prog = (avance_pmrt_prog_actual - avance_pmrt_prog_anterior) * 100
 
+# MONEDA DE TRABAJO
+
+moneda = 'US$'
+
+unidades = 'En millones de '
+
+unidades_corto = 'MM '
+
 # SIDEBAR
 
 fin_stmt = {'Información financiera': ['Principales indicadores',
