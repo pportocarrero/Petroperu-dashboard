@@ -68,7 +68,7 @@ if sidebar_options == 'Principales indicadores':
 
     kpi_main1.metric('Avance físico de obra', f'{avance_pmrt_actual:,.2%}', f'{delta_avance_pmrt:,.2f}' + ' p.p. a/a')
 
-    kpi_main2.metric("Avance programado", f'{avance_pmrt_prog_actual:,.2%}', f'{delta_pmrt_prog:,.2f}' + ' p.p. a/a')
+    kpi_main2.metric('Avance programado', f'{avance_pmrt_prog_actual:,.2%}', f'{delta_pmrt_prog:,.2f}' + ' p.p. a/a')
 
 # ÚLTIMAS NOTICIAS Y HECHOS DE IMPORTANCIA
 
@@ -167,11 +167,11 @@ elif sidebar_options == 'Balance General':
 
         kpi_summary1, kpi_summary2, kpi_summary3, kpi_summary4, kpi_summary5 = st.columns(5)
 
-        kpi_summary1.metric("Activos (MM US$)", f'{latest_assets:,.0f}', delta_assets)
+        kpi_summary1.metric('Activos ' + '(' + unidades_corto + moneda + ')', f'{latest_assets:,.0f}', delta_assets)
 
-        kpi_summary2.metric("Pasivos (MM US$)", f'{latest_liabilities:,.0f}', delta_liabilities, delta_color = 'inverse')
+        kpi_summary2.metric('Pasivos ' + '(' + unidades_corto + moneda + ')', f'{latest_liabilities:,.0f}', delta_liabilities, delta_color = 'inverse')
 
-        kpi_summary3.metric("Patrimonio (MM US$)", f'{latest_equity:,.0f}', delta_equity)
+        kpi_summary3.metric('Patrimonio ' + '(' + unidades_corto + moneda + ')', f'{latest_equity:,.0f}', delta_equity)
 
         kpi_summary4.metric("ROA", f'{roa_latest:,.1%}', delta_roa + ' p.p.')
 
@@ -185,7 +185,7 @@ elif sidebar_options == 'Balance General':
                                      'Activos': balance_sheet['TOTAL ACTIVO'] / 1000})
 
         fig_total_assets = px.bar(total_assets, x = 'año', y = 'Activos',
-                                  labels = {'año': 'Año','Activos': 'En millones de US$'},
+                                  labels = {'año': 'Año','Activos': unidades + moneda},
                                   text_auto = ',.0f',
                                   title = 'Total de activos financieros')
 
@@ -200,7 +200,7 @@ elif sidebar_options == 'Balance General':
         fig_assets = px.bar(assets_summary, x = 'año', y = ['Activo corriente', 'Activo no corriente']
                           , labels = {'año': 'Año'}, text_auto = ',.0f')
 
-        fig_assets.update_layout(yaxis_title = 'En millones de US$', title = 'Composición de los activos financieros',
+        fig_assets.update_layout(yaxis_title = unidades + moneda, title = 'Composición de los activos financieros',
                                  legend = dict(yanchor="top", y=0.99, xanchor="left", x=0.01))
 
         st.plotly_chart(fig_assets, use_container_width = True)
