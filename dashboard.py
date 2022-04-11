@@ -100,13 +100,6 @@ elif sidebar_options == 'Balance General':
 
     sidebar_balance = st.sidebar.selectbox('Seleccione una opción:', menu_list)
 
-    # TITLE
-
-    #st.title('Análisis del Balance General de Petroperú')
-
-    #st.write('Introducir un comentario sobre el análisis horizontal, vertical y de los '
-    #         'principales ratios de Petroperú')
-
     # RESUMEN
 
     if sidebar_balance == 'Resumen':
