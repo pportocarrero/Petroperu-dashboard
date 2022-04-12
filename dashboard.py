@@ -570,23 +570,23 @@ elif sidebar_options == 'Balance General':
 
         # Capital
 
-        capita = pd.DataFrame({
+        capital = pd.DataFrame({
             'año': balance_sheet['year'],
-            'Capitals': (balance_sheet['Otros pasivos financieros no corrientes'] +
-                                            balance_sheet['Provisiones'] +
-                                            balance_sheet['Pasivos por arrendamientos no corrientes']) / 1000
+            'Capital': (balance_sheet['Otros pasivos financieros no corrientes'] +
+                                            balance_sheet['Capital social'] +
+                                            balance_sheet['Capital adicional']) / 1000
         })
 
-        fig_otros_pasivos_no_corr = px.bar(otros_pasivos_no_corr, x = 'año', y = 'Otros pasivos no corrientes',
+        fig_capital = px.bar(otros_pasivos_no_corr, x = 'año', y = 'Capital',
                                            labels = {'año': 'Año',
-                                                     'Otros pasivos no corrientes': 'En millones de US$'},
-                                           title = 'Otros pasivos no corrientes 1/', text_auto = ',.0f'
+                                                     'Capital': unidades + moneda},
+                                           title = 'Capital 1/', text_auto = ',.0f'
                                            )
 
-        st.plotly_chart(fig_otros_pasivos_no_corr, use_container_width = True)
+        st.plotly_chart(fig_capital, use_container_width = True)
 
-        st.caption('1/ Cuentas por pagar incluye: (i) Otros pasivos financieros no corrientes; '
-                   '(ii) Provisiones; y (iii) Pasivos por arrendamientos no corrientes.')
+        st.caption('1/ Capital incluye: (i) Capital social; y '
+                   '(ii) Capital adicional.')
 
         # Reserva legal
 
