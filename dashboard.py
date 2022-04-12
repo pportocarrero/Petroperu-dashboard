@@ -3,6 +3,7 @@
 import streamlit as st
 import plotly.express as px
 import pandas as pd
+import plotly.graph_objects as go
 
 # LOAD SOME DATA
 
@@ -60,6 +61,27 @@ if sidebar_options == 'Principales indicadores':
 
     st.write('indicadores financieros de Petroperú')
 
+    # KPI's DE COVENANTS
+
+    net_debt_equity = pd.DataFrame({
+        'año': balance_sheet['year'],
+        'Deuda neta sobre patrimonio': ((balance_sheet['Otros pasivos financieros no corrientes'] +
+                                        balance_sheet['Otros pasivos financieros'] -
+                                        balance_sheet['Efectivo y equivalente de efectivo']) /
+                                       balance_sheet['TOTAL PATRIMONIO'])
+                                          })
+
+    net_debt_equity_latest = net_debt_equity['Deuda neta sobre patrimonio'].iloc[-1]
+
+    year_latest = net_debt_equity['año'].iloc[-1]
+
+    net_debt_equity_t1 = net_debt_equity['Deuda neta sobre patrimonio'].iloc[-2]
+
+    year_t1 = net_debt_equity['año'].iloc[-2]
+
+    st.metric('Ratio deuda neta sobre patrimonio', f'{net_debt_equity_latest:,.2f}',
+                               f'{net_debt_equity_t1:,.2f}' + ' en el ' + str(year_t1), delta_color = 'inverse')
+
     # MAIN INDICATORS RELATED TO PMRT
 
     st.subheader('Indicadores del Proyecto de Modernización de la Refinería de Talara')
@@ -69,6 +91,9 @@ if sidebar_options == 'Principales indicadores':
     kpi_main1.metric('Avance físico de obra', f'{avance_pmrt_actual:,.2%}', f'{delta_avance_pmrt:,.2f}' + ' p.p. a/a')
 
     kpi_main2.metric('Avance programado', f'{avance_pmrt_prog_actual:,.2%}', f'{delta_pmrt_prog:,.2f}' + ' p.p. a/a')
+
+    # SEGUIMIENTO DE COVENANTS
+
 
 # ÚLTIMAS NOTICIAS Y HECHOS DE IMPORTANCIA
 
