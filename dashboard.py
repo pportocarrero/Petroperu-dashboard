@@ -572,8 +572,7 @@ elif sidebar_options == 'Balance General':
 
         capital = pd.DataFrame({
             'año': balance_sheet['year'],
-            'Capital': (balance_sheet['Otros pasivos financieros no corrientes'] +
-                                            balance_sheet['Capital social'] +
+            'Capital': (balance_sheet['Capital social'] +
                                             balance_sheet['Capital adicional']) / 1000
         })
 
