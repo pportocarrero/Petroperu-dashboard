@@ -484,7 +484,7 @@ elif sidebar_options == 'Balance General':
 
         st.plotly_chart(fig_otros_pasivos, use_container_width = True)
 
-        st.caption('1/ Cuentas por pagar incluye: (i) Otros pasivos financieros; '
+        st.caption('1/ Otros pasivos financieros incluye: (i) Otros pasivos financieros; '
                    '(ii) Otras provisiones; y (iii) Pasivos por arrendamientos.')
 
         # Pasivos no corrientes
@@ -523,7 +523,7 @@ elif sidebar_options == 'Balance General':
 
         st.plotly_chart(fig_otros_pasivos_no_corr, use_container_width = True)
 
-        st.caption('1/ Cuentas por pagar incluye: (i) Otros pasivos financieros no corrientes; '
+        st.caption('1/ Otros pasivos no corrientes incluye: (i) Otros pasivos financieros no corrientes; '
                    '(ii) Provisiones; y (iii) Pasivos por arrendamientos no corrientes.')
 
     # EQUITY
