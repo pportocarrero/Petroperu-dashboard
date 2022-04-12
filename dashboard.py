@@ -577,7 +577,7 @@ elif sidebar_options == 'Balance General':
                                             balance_sheet['Capital adicional']) / 1000
         })
 
-        fig_capital = px.bar(otros_pasivos_no_corr, x = 'año', y = 'Capital',
+        fig_capital = px.bar(capital, x = 'año', y = 'Capital',
                                            labels = {'año': 'Año',
                                                      'Capital': unidades + moneda},
                                            title = 'Capital 1/', text_auto = ',.0f'
