@@ -587,12 +587,42 @@ elif sidebar_options == 'Balance General':
         st.caption('1/ Capital incluye: (i) Capital social; y '
                    '(ii) Capital adicional.')
 
-        # Reserva legal
-
         # Resultados acumulados
 
-        # Otras reservas del patrimonio
+        resultados_acum = pd.DataFrame({
+            'año': balance_sheet['year'],
+            'Resultados acumulados': (balance_sheet['Resultados acumulados']) / 1000
+        })
 
+        fig_resultados_acum = px.bar(resultados_acum, x = 'año', y = 'Resultados acumulados',
+                             labels = {'año': 'Año',
+                                       'Resultados acumulados': unidades + moneda},
+                             title = 'Resultados acumulados', text_auto = ',.0f'
+                             )
+
+        st.plotly_chart(fig_resultados_acum, use_container_width = True)
+
+        # Reserva legal
+
+        reservas = pd.DataFrame({
+            'año': balance_sheet['year'],
+            'Reservas del patrimonio': (balance_sheet['Reserva legal'] +
+                        balance_sheet['Otras reservas del patrimonio']) / 1000
+        })
+
+        fig_reservas = px.bar(reservas, x = 'año', y = 'Reservas del patrimonio',
+                             labels = {'año': 'Año',
+                                       'Reservas del patrimonio': unidades + moneda},
+                             title = 'Reservas del patrimonio 1/', text_auto = ',.0f'
+                             )
+
+        st.plotly_chart(fig_reservas, use_container_width = True)
+
+        st.caption('1/ Reservas del patrimonio incluye: (i) Reserva legal; y '
+                   '(ii) Otras reservas del patrimonio.')
+
+################################
+    
     elif sidebar_balance == 'Análisis de ratios financieros':
 
         st.title('Análisis de ratios financieros')
