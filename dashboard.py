@@ -506,7 +506,7 @@ elif sidebar_options == 'Balance General':
 
         # SOME KPI's
 
-        st.title('Situación de los pasivos financieros al ' + str() + ' (en ' + unidades_corto + moneda + ')')
+        st.title('Situación de los pasivos financieros al ' + str(year_latest) + ' (en ' + unidades_corto + moneda + ')')
 
         latest_liabilities = balance_sheet['TOTAL PASIVO'].iloc[-1] / 1000
 
