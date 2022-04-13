@@ -11,19 +11,23 @@ balance_sheet = pd.read_csv('balance_sheet_annual2.csv', delimiter = ';')
 
 income_statement = pd.read_csv('income_statement.csv', delimiter = ';')
 
+cash_flow = pd.read_csv('cash flow statement.csv', delimiter = ';')
+
 # AVANCE DEL PMRT
 
-avance_pmrt_actual = 0.9679
+avance_pmrt_actual = 0.9679 * 100
 
-avance_pmrt_anterior = 0.9274
+avance_pmrt_anterior = 0.9274 * 100
 
 delta_avance_pmrt = (avance_pmrt_actual - avance_pmrt_anterior) * 100
 
-avance_pmrt_prog_actual = 0.9937
+avance_pmrt_prog_actual = 0.9937 * 100
 
-avance_pmrt_prog_anterior = 0.9310
+avance_pmrt_prog_anterior = 0.9310 * 100
 
 delta_pmrt_prog = (avance_pmrt_prog_actual - avance_pmrt_prog_anterior) * 100
+
+year_latest = 2021
 
 # MONEDA DE TRABAJO
 
@@ -50,7 +54,7 @@ sidebar_options = st.sidebar.selectbox('Seleccione la información a visualizar:
 
 if sidebar_options == 'Principales indicadores':
 
-    st.title('Principales indicadores de Petroperú')
+    st.title('Principales indicadores de Petroperú (' + str(year_latest) + ')')
 
     st.write('Acá se mostrará un pequeño comentario y principales indicadores de Petroperú y '
              'sobre el Proyecto de Modernización de la Refinería de Talara')
@@ -83,15 +87,44 @@ if sidebar_options == 'Principales indicadores':
 
     # Cobertura de servicio de la deuda
 
+    debt_srvc_cov = pd.DataFrame({
+        'año': cash_flow['year'],
+        'Cobertura del servicio de la deuda': ((cash_flow['Efectivo neto provisto por actividades de operación'] +
+                                               cash_flow['Pago de impuesto a las ganancias']) /
+                                              (cash_flow['Pago de intereses'] * - 1))
+    })
+
+    debt_srvc_cov_latest = debt_srvc_cov['Cobertura del servicio de la deuda'].iloc[-1]
+
+    debt_srvc_cov_t1 = debt_srvc_cov['Cobertura del servicio de la deuda'].iloc[-2]
+
+    delta_debt_srvc_cov = debt_srvc_cov_latest - debt_srvc_cov_t1
+
+    # Deuda por PMRT
+
+    pmrt = pd.DataFrame({
+        'año': balance_sheet['year'],
+        'Deuda por PMRT': balance_sheet['Otros pasivos financieros no corrientes'] / 1000
+    })
+
+    pmrt_latest = pmrt['Deuda por PMRT'].iloc[-1]
+
+    pmrt_t1 = pmrt['Deuda por PMRT'].iloc[-2]
+
+    delta_pmrt = pmrt_latest - pmrt_t1
+
     # KPIs DE COVENANTS
 
     kpi_convenants1, kpi_covenants2 = st.columns(2)
 
-    kpi_convenants1.metric('Ratio deuda neta sobre patrimonio', f'{net_debt_equity_latest:,.2f}' + ' (' + str(year_latest) + ')',
+    kpi_convenants1.metric('Deuda neta sobre patrimonio', f'{net_debt_equity_latest:,.2f}',
                                f'{delta_net_debt_equity:,.2f}' + ' a/a', delta_color = 'inverse')
 
-    kpi_covenants2.metric('Ratio de cobertura de servicio de la deuda', f'{net_debt_equity_latest:,.2f}' + ' (' + str(year_latest) + ')',
-                          f'{delta_net_debt_equity:,.2f}' + ' a/a', delta_color = 'inverse')
+    kpi_covenants2.metric('Cobertura de servicio de la deuda', f'{debt_srvc_cov_latest:,.2f}',
+                          f'{delta_debt_srvc_cov:,.2f}' + ' a/a', delta_color = 'inverse')
+
+    #kpi_covenants3.metric('Deuda del PMRT', f'{pmrt_latest:,.2f}',
+    #                      f'{delta_pmrt:,.2f}' + ' (' + unidades_corto + moneda + ' a/a)', delta_color = 'inverse')
 
     # Gráficos de los ratios de los covenants
 
@@ -99,14 +132,51 @@ if sidebar_options == 'Principales indicadores':
 
     st.subheader('Indicadores del Proyecto de Modernización de la Refinería de Talara')
 
-    kpi_main1, kpi_main2 = st.columns(2)
+    #kpi_main1, kpi_main2 = st.columns(2)
 
-    kpi_main1.metric('Avance físico de obra', f'{avance_pmrt_actual:,.2%}', f'{delta_avance_pmrt:,.2f}' + ' p.p. a/a')
+    #kpi_main1.metric('Avance físico de obra', f'{avance_pmrt_actual:,.2%}', f'{delta_avance_pmrt:,.2f}' + ' p.p. a/a')
 
-    kpi_main2.metric('Avance programado', f'{avance_pmrt_prog_actual:,.2%}', f'{delta_pmrt_prog:,.2f}' + ' p.p. a/a')
+    #kpi_main2.metric('Avance programado', f'{avance_pmrt_prog_actual:,.2%}', f'{delta_pmrt_prog:,.2f}' + ' p.p. a/a')
 
-    # SEGUIMIENTO DE COVENANTS
+    fig_pmrt = go.Figure()
 
+    fig_pmrt.add_trace(go.Indicator(
+        value = avance_pmrt_actual ,
+        delta = {'reference': avance_pmrt_anterior},
+        title = {'text': "Avance físico del PMRT"},
+        gauge = {'axis': {'range': [None, 100]},
+                 'threshold' : {'line': {'color': "red", 'width': 4}, 'thickness': 0.75, 'value': 100}},
+        domain = {'row': 1, 'column': 0}))
+
+    fig_pmrt.add_trace(go.Indicator(
+        value = avance_pmrt_prog_actual,
+        delta = {'reference': avance_pmrt_prog_anterior},
+        title = {'text': "Avance programado del PMRT"},
+        gauge = {'axis': {'range': [None, 100]},
+                 'threshold' : {'line': {'color': "red", 'width': 4}, 'thickness': 0.75, 'value': 100}},
+        domain = {'row': 1, 'column': 1}))
+
+    fig_pmrt.update_layout(
+        grid = {'rows': 1, 'columns': 2, 'pattern': "independent"},
+        template = {'data' : {'indicator': [{
+            'title': {'text': "Speed"},
+            'mode' : "number+delta+gauge",
+        }]
+        }})
+
+    fig = go.Figure(go.Indicator(
+        domain = {'x': [0, 1], 'y': [0, 1]},
+        value = 450,
+        mode = "gauge+number+delta",
+        title = {'text': "Speed"},
+        delta = {'reference': 380},
+        gauge = {'axis': {'range': [None, 500]},
+                 'steps' : [
+                     {'range': [0, 250], 'color': "lightgray"},
+                     {'range': [250, 400], 'color': "gray"}],
+                 'threshold' : {'line': {'color': "red", 'width': 4}, 'thickness': 0.75, 'value': 490}}))
+
+    st.plotly_chart(fig_pmrt, use_container_width=True, height = 2400, width = 1000)
 
 # ÚLTIMAS NOTICIAS Y HECHOS DE IMPORTANCIA
 
