@@ -59,9 +59,9 @@ if sidebar_options == 'Principales indicadores':
 
     st.subheader('Indicadores de seguimiento de Petroperú')
 
-    st.write('indicadores financieros de Petroperú')
-
     # KPI's DE COVENANTS
+
+    # Deuda neta sobre patrimonio
 
     net_debt_equity = pd.DataFrame({
         'año': balance_sheet['year'],
@@ -79,8 +79,21 @@ if sidebar_options == 'Principales indicadores':
 
     year_t1 = net_debt_equity['año'].iloc[-2]
 
-    st.metric('Ratio deuda neta sobre patrimonio', f'{net_debt_equity_latest:,.2f}',
-                               f'{net_debt_equity_t1:,.2f}' + ' en el ' + str(year_t1), delta_color = 'inverse')
+    delta_net_debt_equity = net_debt_equity_latest - net_debt_equity_t1
+
+    # Cobertura de servicio de la deuda
+
+    # KPIs DE COVENANTS
+
+    kpi_convenants1, kpi_covenants2 = st.columns(2)
+
+    kpi_convenants1.metric('Ratio deuda neta sobre patrimonio', f'{net_debt_equity_latest:,.2f}' + ' (' + str(year_latest) + ')',
+                               f'{delta_net_debt_equity:,.2f}' + ' a/a', delta_color = 'inverse')
+
+    kpi_covenants2.metric('Ratio de cobertura de servicio de la deuda', f'{net_debt_equity_latest:,.2f}' + ' (' + str(year_latest) + ')',
+                          f'{delta_net_debt_equity:,.2f}' + ' a/a', delta_color = 'inverse')
+
+    # Gráficos de los ratios de los covenants
 
     # MAIN INDICATORS RELATED TO PMRT
 
