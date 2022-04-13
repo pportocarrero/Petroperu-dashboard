@@ -626,7 +626,7 @@ elif sidebar_options == 'Balance General':
 
     elif sidebar_balance == 'Situación del patrimonio':
 
-        st.title('Situación del patrimonio (en MM US$)')
+        st.title('Situación del patrimonio al ' + str(year_latest) + ' (en ' + unidades_corto + moneda + ')')
 
         # SOME KPI's
 
