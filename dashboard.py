@@ -143,7 +143,7 @@ if sidebar_options == 'Principales indicadores':
     fig_pmrt.add_trace(go.Indicator(
         value = avance_pmrt_actual ,
         delta = {'reference': avance_pmrt_anterior},
-        title = {'text': "Avance físico del PMRT"},
+        title = {'text': 'Avance físico del PMRT (%)'},
         gauge = {'axis': {'range': [None, 100]},
                  'threshold' : {'line': {'color': "red", 'width': 4}, 'thickness': 0.75, 'value': 100}},
         domain = {'row': 1, 'column': 0}))
@@ -151,7 +151,7 @@ if sidebar_options == 'Principales indicadores':
     fig_pmrt.add_trace(go.Indicator(
         value = avance_pmrt_prog_actual,
         delta = {'reference': avance_pmrt_prog_anterior},
-        title = {'text': "Avance programado del PMRT"},
+        title = {'text': 'Avance programado del PMRT (%)'},
         gauge = {'axis': {'range': [None, 100]},
                  'threshold' : {'line': {'color': "red", 'width': 4}, 'thickness': 0.75, 'value': 100}},
         domain = {'row': 1, 'column': 1}))
