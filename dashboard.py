@@ -41,8 +41,7 @@ unidades_corto = 'MM '
 
 fin_stmt = {'Información financiera': ['Principales indicadores',
                                        'Últimas noticias y hechos de importancia',
-                                       'Balance General', 'Estado de Resultados',
-                                       'Flujo de efectivo']}
+                                       'Balance General', 'Estado de Resultados']}
 
 types_df = pd.DataFrame(fin_stmt)
 
@@ -1084,11 +1083,11 @@ elif sidebar_options == 'Estado de Resultados':
 
 # FLUJO DE EFECTIVO
 
-elif sidebar_options == 'Flujo de efectivo':
+#elif sidebar_options == 'Flujo de efectivo':
 
-    st.title('Análisis del flujo de efectivo de Petroperú')
+#    st.title('Análisis del flujo de efectivo de Petroperú')
 
-    st.write('Introducir algún comentario sobre el Flujo de efectivo de Petroperú')
+#    st.write('Introducir algún comentario sobre el Flujo de efectivo de Petroperú')
 
 # NORMAS LEGALES
 
