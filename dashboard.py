@@ -343,7 +343,7 @@ elif sidebar_options == 'Balance General':
 
     elif sidebar_balance == 'Situación de los activos':
 
-        st.title('Situación de los activos financieros al ' + str(year_latest) + '(en ' + unidades_corto + moneda + ')')
+        st.title('Situación de los activos financieros al ' + str(year_latest) + ' (en ' + unidades_corto + moneda + ')')
 
         # SOME KPI's
 
