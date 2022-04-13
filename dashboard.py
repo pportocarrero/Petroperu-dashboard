@@ -55,8 +55,9 @@ if sidebar_options == 'Principales indicadores':
 
     st.title('Principales indicadores de Petroperú (' + str(year_latest) + ')')
 
-    st.write('Acá se mostrará un pequeño comentario y principales indicadores de Petroperú y '
-             'sobre el Proyecto de Modernización de la Refinería de Talara')
+    st.write('Este tablero de control permite mostrar información relevante sobre Petroperú,'
+             ' relacionada a sus resultados financieros y al Proyecto de Modernización de la Refineriía de'
+             ' Talara.')
 
     # MAIN INDICATORS RELATED TO PETROPERÙ
 
