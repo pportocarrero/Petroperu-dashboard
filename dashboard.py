@@ -53,7 +53,7 @@ sidebar_options = st.sidebar.selectbox('Seleccione la información a visualizar:
 
 if sidebar_options == 'Principales indicadores':
 
-    st.title('Principales indicadores de Petroperú (' + str(year_latest) + ')')
+    st.title('Principales indicadores de Petroperú (al ' + str(year_latest) + ')')
 
     st.write('Este tablero de control permite mostrar información relevante sobre Petroperú,'
              ' relacionada a sus resultados financieros y al Proyecto de Modernización de la Refineriía de'
@@ -343,7 +343,7 @@ elif sidebar_options == 'Balance General':
 
     elif sidebar_balance == 'Situación de los activos':
 
-        st.title('Situación de los activos financieros (en MM US$)')
+        st.title('Situación de los activos financieros al ' + str(year_latest) + '(en ' + unidades_corto + moneda + ')')
 
         # SOME KPI's
 
