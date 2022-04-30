@@ -37,6 +37,8 @@ unidades = 'En millones de '
 
 unidades_corto = 'MM '
 
+empresa = 'Petroperú'
+
 # SIDEBAR
 
 fin_stmt = {'Información financiera': ['Principales indicadores',
@@ -121,7 +123,7 @@ if sidebar_options == 'Principales indicadores':
                                f'{delta_net_debt_equity:,.2f}' + ' a/a', delta_color = 'inverse')
 
     kpi_covenants2.metric('Cobertura de servicio de la deuda', f'{debt_srvc_cov_latest:,.2f}',
-                          f'{delta_debt_srvc_cov:,.2f}' + ' a/a', delta_color = 'inverse')
+                          f'{delta_debt_srvc_cov:,.2f}' + ' a/a')
 
     #kpi_covenants3.metric('Deuda del PMRT', f'{pmrt_latest:,.2f}',
     #                      f'{delta_pmrt:,.2f}' + ' (' + unidades_corto + moneda + ' a/a)', delta_color = 'inverse')
@@ -1082,13 +1084,90 @@ elif sidebar_options == 'Estado de Resultados':
 
     st.write('Introducir algún comentario sobre los Estados financieros de Petroperú')
 
+    inc_stmt = pd.DataFrame({
+        'Componentes': [
+            'Ingresos ordinarios',
+            'Otros ingresos',
+            'Costo de ventas',
+            'Gastos de operación',
+            'Gastos financieros',
+            'Impuestos',
+            'Resultado del ejercicio'
+                        ],
+        'Valores': [
+            income_statement['Ingresos de actividades ordinarias'].iloc[-1] / 1000,
+            income_statement['Otros ingresos operacionales'].iloc[-1] / 1000,
+            income_statement['Costo de ventas'].iloc[-1] / 1000,
+            income_statement['Total gastos de operación'].iloc[-1] / 1000,
+            (income_statement['Ingresos financieros'].iloc[-1] +
+            income_statement['Gastos financieros'].iloc[-1] +
+            income_statement['Diferencia de cambio neta'].iloc[-1]) / 1000,
+            income_statement['Gasto por impuesto a las ganancias'].iloc[-1] / 1000,
+            income_statement['Total resultados integrales'].iloc[-1] / 1000
+        ]
+    })
+
+    ing_act_ord = income_statement['Ingresos de actividades ordinarias'].iloc[-1] / 1000
+
+    #ing_act_ord = '{:0f}'.format(ing_act_ord)
+
+    ot_ing_op = income_statement['Otros ingresos operacionales'].iloc[-1] / 1000
+
+    #ot_ing_op = '{:0n}'.format(ot_ing_op)
+
+    costo_ventas = income_statement['Costo de ventas'].iloc[-1] / 1000
+
+    #costo_ventas = '{:0n}'.format(costo_ventas)
+
+    gastos_operacion = income_statement['Total gastos de operación'].iloc[-1] / 1000
+
+    #gastos_operacion = '{:0n}'.format(gastos_operacion)
+
+    gastos_fin = (income_statement['Ingresos financieros'].iloc[-1] +
+                  income_statement['Gastos financieros'].iloc[-1] +
+                  income_statement['Diferencia de cambio neta'].iloc[-1]) / 1000
+
+    #gastos_fin = '{:0n}'.format(gastos_fin)
+
+    impuesto_ganancias = income_statement['Gasto por impuesto a las ganancias'].iloc[-1] / 1000
+
+    #impuesto_ganancias = '{:0n}'.format(impuesto_ganancias)
+
+    resultado_neto = income_statement['Total resultados integrales'].iloc[-1] / 1000
+
+    #resultado_neto = '{:0n}'.format(resultado_neto)
+
+    fig_inc_stmt = go.Figure(go.Waterfall(
+        orientation = "v",
+        base = 0,
+        measure = ['absolute', 'relative', 'relative', 'relative', 'relative', 'relative', 'total'],
+        x = [
+            'Ingresos ordinarios',
+            'Otros ingresos',
+            'Costo de ventas',
+            'Gastos de operación',
+            'Gastos financieros',
+            'Impuestos',
+            'Resultado del ejercicio'],
+        text = [ing_act_ord, ot_ing_op, costo_ventas, gastos_operacion, gastos_fin, impuesto_ganancias, resultado_neto],
+        textposition = 'outside',
+        y = [ing_act_ord, ot_ing_op, costo_ventas, gastos_operacion, gastos_fin, impuesto_ganancias, resultado_neto]
+    ))
+
+    fig_inc_stmt.update_layout(
+        title = 'Estado de resultados de ' + empresa + ' para el año ' + str(year_latest),
+        showlegend = False
+    )
+
+    st.plotly_chart(fig_inc_stmt, use_container_width = False, height = 4800, width = 4000)
+
 # FLUJO DE EFECTIVO
 
-#elif sidebar_options == 'Flujo de efectivo':
+elif sidebar_options == 'Flujo de efectivo':
 
-#    st.title('Análisis del flujo de efectivo de Petroperú')
+    st.title('Análisis del flujo de efectivo de Petroperú')
 
-#    st.write('Introducir algún comentario sobre el Flujo de efectivo de Petroperú')
+    st.write('Introducir algún comentario sobre el Flujo de efectivo de Petroperú')
 
 # NORMAS LEGALES
 
