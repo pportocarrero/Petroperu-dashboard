@@ -7,23 +7,23 @@ import plotly.graph_objects as go
 
 # LOAD SOME DATA
 
-balance_sheet = pd.read_csv('balance_sheet_annual2.csv', delimiter = ';')
+balance_sheet = pd.read_csv('balance_sheet_annual2.csv', delimiter=';')
 
-income_statement = pd.read_csv('income_statement.csv', delimiter = ';')
+income_statement = pd.read_csv('income_statement.csv', delimiter=';')
 
-cash_flow = pd.read_csv('cash flow statement.csv', delimiter = ';')
+cash_flow = pd.read_csv('cash flow statement.csv', delimiter=';')
 
 # AVANCE DEL PMRT
 
-avance_pmrt_actual = 96.79
+avance_pmrt_actual = 96.79  # CAMBIAR AVANCE ACTUAL DEL PMRT
 
-avance_pmrt_anterior = 92.74
+avance_pmrt_anterior = 92.74  # CAMBIAR AVANCE ANTERIOR DEL PMRT
 
 delta_avance_pmrt = (avance_pmrt_actual - avance_pmrt_anterior) * 100
 
-avance_pmrt_prog_actual = 99.37
+avance_pmrt_prog_actual = 99.37  # CAMBIAR AVANCE ACTUAL PROGRAMADO DEL PMRT
 
-avance_pmrt_prog_anterior = 93.10
+avance_pmrt_prog_anterior = 93.10  # CAMBIAR AVANCE ANTERIOR PROGRAMADO DEL PMRT
 
 delta_pmrt_prog = (avance_pmrt_prog_actual - avance_pmrt_prog_anterior) * 100
 
@@ -71,10 +71,12 @@ if sidebar_options == 'Principales indicadores':
 
     net_debt_equity = pd.DataFrame({
         'año': balance_sheet['year'],
-        'Deuda neta sobre patrimonio': ((balance_sheet['Otros pasivos financieros no corrientes'] +
-                                        balance_sheet['Otros pasivos financieros'] -
-                                        balance_sheet['Efectivo y equivalente de efectivo']) /
-                                       balance_sheet['TOTAL PATRIMONIO'])
+        'Deuda neta sobre patrimonio': (
+                (balance_sheet['Otros pasivos financieros no corrientes'] +
+                 balance_sheet['Otros pasivos financieros'] -
+                 balance_sheet['Efectivo y equivalente de efectivo']) /
+                balance_sheet['TOTAL PATRIMONIO']
+        )
                                           })
 
     net_debt_equity_latest = net_debt_equity['Deuda neta sobre patrimonio'].iloc[-1]
@@ -91,9 +93,11 @@ if sidebar_options == 'Principales indicadores':
 
     debt_srvc_cov = pd.DataFrame({
         'año': cash_flow['year'],
-        'Cobertura del servicio de la deuda': ((cash_flow['Efectivo neto provisto por actividades de operación'] +
-                                               cash_flow['Pago de impuesto a las ganancias']) /
-                                              (cash_flow['Pago de intereses'] * - 1))
+        'Cobertura del servicio de la deuda': (
+                (cash_flow['Efectivo neto provisto por actividades de operación'] +
+                 cash_flow['Pago de impuesto a las ganancias']) /
+                (cash_flow['Pago de intereses'] * - 1)
+        )
     })
 
     debt_srvc_cov_latest = debt_srvc_cov['Cobertura del servicio de la deuda'].iloc[-1]
@@ -119,13 +123,20 @@ if sidebar_options == 'Principales indicadores':
 
     kpi_convenants1, kpi_covenants2 = st.columns(2)
 
-    kpi_convenants1.metric('Deuda neta sobre patrimonio', f'{net_debt_equity_latest:,.2f}',
-                               f'{delta_net_debt_equity:,.2f}' + ' a/a', delta_color = 'inverse')
+    kpi_convenants1.metric(
+        'Deuda neta sobre patrimonio',
+        f'{net_debt_equity_latest:,.2f}',
+        f'{delta_net_debt_equity:,.2f}' + ' a/a',
+        delta_color='inverse'
+    )
 
-    kpi_covenants2.metric('Cobertura de servicio de la deuda', f'{debt_srvc_cov_latest:,.2f}',
-                          f'{delta_debt_srvc_cov:,.2f}' + ' a/a')
+    kpi_covenants2.metric(
+        'Cobertura de servicio de la deuda',
+        f'{debt_srvc_cov_latest:,.2f}',
+        f'{delta_debt_srvc_cov:,.2f}' + ' a/a'
+    )
 
-    #kpi_covenants3.metric('Deuda del PMRT', f'{pmrt_latest:,.2f}',
+    # kpi_covenants3.metric('Deuda del PMRT', f'{pmrt_latest:,.2f}',
     #                      f'{delta_pmrt:,.2f}' + ' (' + unidades_corto + moneda + ' a/a)', delta_color = 'inverse')
 
     # Gráficos de los ratios de los covenants
@@ -134,39 +145,39 @@ if sidebar_options == 'Principales indicadores':
 
     st.subheader('Indicadores del Proyecto de Modernización de la Refinería de Talara')
 
-    #kpi_main1, kpi_main2 = st.columns(2)
+    # kpi_main1, kpi_main2 = st.columns(2)
 
-    #kpi_main1.metric('Avance físico de obra', f'{avance_pmrt_actual:,.2%}', f'{delta_avance_pmrt:,.2f}' + ' p.p. a/a')
+    # kpi_main1.metric('Avance físico de obra', f'{avance_pmrt_actual:,.2%}', f'{delta_avance_pmrt:,.2f}' + ' p.p. a/a')
 
-    #kpi_main2.metric('Avance programado', f'{avance_pmrt_prog_actual:,.2%}', f'{delta_pmrt_prog:,.2f}' + ' p.p. a/a')
+    # kpi_main2.metric('Avance programado', f'{avance_pmrt_prog_actual:,.2%}', f'{delta_pmrt_prog:,.2f}' + ' p.p. a/a')
 
     fig_pmrt = go.Figure()
 
     fig_pmrt.add_trace(go.Indicator(
-        value = avance_pmrt_actual ,
-        delta = {'reference': avance_pmrt_anterior},
-        title = {'text': 'Avance físico del PMRT (%)'},
-        gauge = {'axis': {'range': [None, 100]},
-                 'threshold' : {'line': {'color': "red", 'width': 4}, 'thickness': 0.75, 'value': 100}},
-        domain = {'row': 1, 'column': 0}))
+        value=avance_pmrt_actual,
+        delta={'reference': avance_pmrt_anterior},
+        title={'text': 'Avance físico del PMRT (%)'},
+        gauge={'axis': {'range': [None, 100]},
+               'threshold': {'line': {'color': "red", 'width': 4}, 'thickness': 0.75, 'value': 100}},
+        domain={'row': 1, 'column': 0}))
 
     fig_pmrt.add_trace(go.Indicator(
-        value = avance_pmrt_prog_actual,
-        delta = {'reference': avance_pmrt_prog_anterior},
-        title = {'text': 'Avance programado del PMRT (%)'},
-        gauge = {'axis': {'range': [None, 100]},
-                 'threshold' : {'line': {'color': "red", 'width': 4}, 'thickness': 0.75, 'value': 100}},
-        domain = {'row': 1, 'column': 1}))
+        value=avance_pmrt_prog_actual,
+        delta={'reference': avance_pmrt_prog_anterior},
+        title={'text': 'Avance programado del PMRT (%)'},
+        gauge={'axis': {'range': [None, 100]},
+               'threshold': {'line': {'color': "red", 'width': 4}, 'thickness': 0.75, 'value': 100}},
+        domain={'row': 1, 'column': 1}))
 
     fig_pmrt.update_layout(
-        grid = {'rows': 1, 'columns': 2, 'pattern': "independent"},
-        template = {'data' : {'indicator': [{
+        grid={'rows': 1, 'columns': 2, 'pattern': "independent"},
+        template={'data': {'indicator': [{
             'title': {'text': "Speed"},
-            'mode' : "number+delta+gauge",
+            'mode': "number+delta+gauge",
         }]
         }})
 
-    st.plotly_chart(fig_pmrt, use_container_width=True, height = 1200, width = 1000)
+    st.plotly_chart(fig_pmrt, use_container_width=True, height=1200, width=1000)
 
 # ÚLTIMAS NOTICIAS Y HECHOS DE IMPORTANCIA
 
@@ -182,15 +193,18 @@ elif sidebar_options == 'Balance General':
 
     # GET BALANCE SHEET DATA
 
-    balance_sheet = pd.read_csv('balance_sheet_annual2.csv', delimiter= ';')
+    balance_sheet = pd.read_csv('balance_sheet_annual2.csv', delimiter=';')
 
     # OPTIONS TO VISUALIZE ASSETS
 
-    menu_opciones = {'Menú de opciones': ['Resumen',
-                                           'Situación de los activos',
-                                           'Situación de los pasivos',
-                                          'Situación del patrimonio',
-                                          'Análisis de ratios financieros']}
+    menu_opciones = {
+        'Menú de opciones':
+            ['Resumen',
+             'Situación de los activos',
+             'Situación de los pasivos',
+             'Situación del patrimonio',
+             'Análisis de ratios financieros']
+                     }
 
     menu_df = pd.DataFrame(menu_opciones)
 
@@ -260,7 +274,7 @@ elif sidebar_options == 'Balance General':
 
         kpi_summary1.metric('Activos ' + '(' + unidades_corto + moneda + ')', f'{latest_assets:,.0f}', delta_assets)
 
-        kpi_summary2.metric('Pasivos ' + '(' + unidades_corto + moneda + ')', f'{latest_liabilities:,.0f}', delta_liabilities, delta_color = 'inverse')
+        kpi_summary2.metric('Pasivos ' + '(' + unidades_corto + moneda + ')', f'{latest_liabilities:,.0f}', delta_liabilities, delta_color='inverse')
 
         kpi_summary3.metric('Patrimonio ' + '(' + unidades_corto + moneda + ')', f'{latest_equity:,.0f}', delta_equity)
 
@@ -275,26 +289,26 @@ elif sidebar_options == 'Balance General':
         total_assets = pd.DataFrame({'año': balance_sheet['year'],
                                      'Activos': balance_sheet['TOTAL ACTIVO'] / 1000})
 
-        fig_total_assets = px.bar(total_assets, x = 'año', y = 'Activos',
-                                  labels = {'año': 'Año','Activos': unidades + moneda},
-                                  text_auto = ',.0f',
-                                  title = 'Total de activos financieros')
+        fig_total_assets = px.bar(total_assets, x='año', y='Activos',
+                                  labels={'año': 'Año', 'Activos': unidades + moneda},
+                                  text_auto=',.0f',
+                                  title='Total de activos financieros')
 
-        st.plotly_chart(fig_total_assets, use_container_width = True)
+        st.plotly_chart(fig_total_assets, use_container_width=True)
 
         # Composición de los activos financieros
 
-        assets_summary = pd.DataFrame({'año': balance_sheet['year'],
-                                     'Activo corriente': balance_sheet['Total activo corriente'] / 1000,
-                                     'Activo no corriente': balance_sheet['Total activo no corriente'] / 1000})
+        assets_summary = pd.DataFrame(
+            {'año': balance_sheet['year'],
+             'Activo corriente': balance_sheet['Total activo corriente'] / 1000,
+             'Activo no corriente': balance_sheet['Total activo no corriente'] / 1000}
+        )
 
-        fig_assets = px.bar(assets_summary, x = 'año', y = ['Activo corriente', 'Activo no corriente']
-                          , labels = {'año': 'Año'}, text_auto = ',.0f')
+        fig_assets = px.bar(assets_summary, x='año', y=['Activo corriente', 'Activo no corriente'], labels={'año': 'Año'}, text_auto=',.0f')
 
-        fig_assets.update_layout(yaxis_title = unidades + moneda, title = 'Composición de los activos financieros',
-                                 legend = dict(yanchor="top", y=0.99, xanchor="left", x=0.01))
+        fig_assets.update_layout(yaxis_title=unidades + moneda, title='Composición de los activos financieros', legend=dict(yanchor="top", y=0.99, xanchor="left", x=0.01))
 
-        st.plotly_chart(fig_assets, use_container_width = True)
+        st.plotly_chart(fig_assets, use_container_width=True)
 
         # RESUMEN DE LOS PASIVOS FINANCIEROS
 
@@ -303,12 +317,15 @@ elif sidebar_options == 'Balance General':
         total_liabilities = pd.DataFrame({'año': balance_sheet['year'],
                                           'Pasivos': balance_sheet['TOTAL PASIVO'] / 1000})
 
-        fig_total_liabilities = px.bar(total_liabilities, x = 'año', y = 'Pasivos',
-                                  labels = {'año': 'Año','Pasivos': 'En millones de US$'},
-                                       text_auto = ',.0f',
-                                  title = 'Total de pasivos financieros')
+        fig_total_liabilities = px.bar(
+            total_liabilities,
+            x='año',
+            y='Pasivos',
+            labels={'año': 'Año', 'Pasivos': 'En millones de US$'},
+            text_auto=',.0f',
+            title='Total de pasivos financieros')
 
-        st.plotly_chart(fig_total_liabilities, use_container_width = True)
+        st.plotly_chart(fig_total_liabilities, use_container_width=True)
 
         # Composición de los pasivos financieros
 
@@ -317,29 +334,38 @@ elif sidebar_options == 'Balance General':
                                             'Pasivo no corriente': balance_sheet['Total pasivo no corriente'] / 1000
                                             })
 
-        fig_liabilities = px.bar(liabilities_summary, x = 'año', y = ['Pasivo corriente',
-                                                                      'Pasivo no corriente'],
-                                 labels = {'año': 'Año'}, text_auto = ',.0f',
-                                 title = 'Composición de los pasivos financieros')
+        fig_liabilities = px.bar(
+            liabilities_summary,
+            x='año',
+            y=['Pasivo corriente', 'Pasivo no corriente'],
+            labels={'año': 'Año'},
+            text_auto=',.0f',
+            title='Composición de los pasivos financieros')
 
-        fig_liabilities.update_layout(yaxis_title = 'En millones de US$',
-                                      legend = dict(yanchor="top", y=0.99, xanchor="left", x=0.01))
+        fig_liabilities.update_layout(yaxis_title='En millones de US$',
+                                      legend=dict(yanchor="top", y=0.99, xanchor="left", x=0.01))
 
-        st.plotly_chart(fig_liabilities, use_container_width = True)
+        st.plotly_chart(fig_liabilities, use_container_width=True)
 
         # SUMMARY OF EQUITY
 
         st.subheader('Resumen del patrimonio')
 
-        total_equity = pd.DataFrame({'año': balance_sheet['year'],
-                                          'Patrimonio': balance_sheet['TOTAL PATRIMONIO'] / 1000})
+        total_equity = pd.DataFrame(
+            {'año': balance_sheet['year'],
+             'Patrimonio': balance_sheet['TOTAL PATRIMONIO'] / 1000}
+        )
 
-        fig_total_equity = px.bar(total_equity, x = 'año', y = 'Patrimonio',
-                                       labels = {'año': 'Año','Patrimonio': 'En millones de US$'},
-                                  text_auto = ',.0f',
-                                       title = 'Total de patrimonio')
+        fig_total_equity = px.bar(
+            total_equity,
+            x='año',
+            y='Patrimonio',
+            labels={'año': 'Año','Patrimonio': 'En millones de US$'},
+            text_auto=',.0f',
+            title='Total de patrimonio'
+        )
 
-        st.plotly_chart(fig_total_equity, use_container_width = True)
+        st.plotly_chart(fig_total_equity, use_container_width=True)
 
     # ASSETS
 
