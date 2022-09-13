@@ -360,7 +360,7 @@ elif sidebar_options == 'Balance General':
             total_equity,
             x='año',
             y='Patrimonio',
-            labels={'año': 'Año','Patrimonio': 'En millones de US$'},
+            labels={'año': 'Año', 'Patrimonio': 'En millones de US$'},
             text_auto=',.0f',
             title='Total de patrimonio'
         )
@@ -413,31 +413,36 @@ elif sidebar_options == 'Balance General':
 
         # Caja
 
-        assets_cash = pd.DataFrame({'año': balance_sheet['year'],
-                                    'Efectivo y equivalentes de efectivo':
-            balance_sheet['Efectivo y equivalente de efectivo'] / 1000})
+        assets_cash = pd.DataFrame(
+            {'año': balance_sheet['year'],
+             'Efectivo y equivalentes de efectivo': balance_sheet['Efectivo y equivalente de efectivo'] / 1000}
+        )
 
-        fig_cash = px.bar(assets_cash, x = 'año', y = 'Efectivo y equivalentes de efectivo',
-                       labels = {'año': 'Año',
-                                 'Efectivo y equivalentes de efectivo': 'En millones de US$'},
-                          title = 'Efectivo y equivalentes de efectivo', text_auto = ',.0f')
+        fig_cash = px.bar(
+            assets_cash,
+            x='año',
+            y='Efectivo y equivalentes de efectivo',
+            labels={'año': 'Año', 'Efectivo y equivalentes de efectivo': 'En millones de US$'},
+            title='Efectivo y equivalentes de efectivo', text_auto=',.0f')
 
-        st.plotly_chart(fig_cash, use_container_width = True)
+        st.plotly_chart(fig_cash, use_container_width=True)
 
         # Cuentas por cobrar
 
         ctas_cobrar = pd.DataFrame({
             'año': balance_sheet['year'],
-            'Cuentas por cobrar': (balance_sheet['Cuentas por cobrar comerciales'] +
-                                  balance_sheet['Otras cuentas por cobrar']) / 1000
+            'Cuentas por cobrar': (balance_sheet['Cuentas por cobrar comerciales'] + balance_sheet['Otras cuentas por cobrar']) / 1000
         })
 
-        fig_ctas_cobrar = px.bar(ctas_cobrar, x = 'año', y = 'Cuentas por cobrar',
-                                 labels = {'año': 'Año', 'Cuentas por cobrar': 'En millones de US$'},
-                                 title = 'Cuentas por cobrar 1/', text_auto = ',.0f'
+        fig_ctas_cobrar = px.bar(
+            ctas_cobrar,
+            x='año',
+            y='Cuentas por cobrar',
+            labels={'año': 'Año', 'Cuentas por cobrar': 'En millones de US$'},
+            title='Cuentas por cobrar 1/', text_auto=',.0f'
                                  )
 
-        st.plotly_chart(fig_ctas_cobrar, use_container_width = True)
+        st.plotly_chart(fig_ctas_cobrar, use_container_width=True)
 
         st.caption('1/ Cuentas por cobrar incluye: (i) Cuentas por cobrar comerciales; y '
                    '(ii) Otras cuentas por cobrar')
@@ -449,27 +454,34 @@ elif sidebar_options == 'Balance General':
             'Inventarios': balance_sheet['Inventarios'] / 1000
         })
 
-        fig_inventario = px.bar(inventario, x = 'año', y = 'Inventarios',
-                                 labels = {'año': 'Año', 'Inventarios': 'En millones de US$'},
-                                 title = 'Inventarios', text_auto = ',.0f'
-                                 )
+        fig_inventario = px.bar(
+            inventario,
+            x='año',
+            y='Inventarios',
+            labels={'año': 'Año', 'Inventarios': 'En millones de US$'},
+            title='Inventarios',
+            text_auto=',.0f'
+        )
 
-        st.plotly_chart(fig_inventario, use_container_width = True)
+        st.plotly_chart(fig_inventario, use_container_width=True)
 
         # Otros activos corrientes
 
         otros_act_corr = pd.DataFrame({
             'año': balance_sheet['year'],
-            'Otros activos corrientes': (balance_sheet['Otros activos financieros al costo amortizado'] +
-                                   balance_sheet['Otros activos'] + balance_sheet['Activos mantenidos para la venta']) / 1000
+            'Otros activos corrientes': (balance_sheet['Otros activos financieros al costo amortizado'] + balance_sheet['Otros activos'] + balance_sheet['Activos mantenidos para la venta']) / 1000
         })
 
-        fig_otros_act_corr = px.bar(otros_act_corr, x = 'año', y = 'Otros activos corrientes',
-                                 labels = {'año': 'Año', 'Otros activos corrientes': 'En millones de US$'},
-                                 title = 'Otros activos corrientes 1/', text_auto = ',.0f'
+        fig_otros_act_corr = px.bar(
+            otros_act_corr,
+            x='año',
+            y='Otros activos corrientes',
+            labels={'año': 'Año', 'Otros activos corrientes': 'En millones de US$'},
+            title='Otros activos corrientes 1/',
+            text_auto=',.0f'
                                  )
 
-        st.plotly_chart(fig_otros_act_corr, use_container_width = True)
+        st.plotly_chart(fig_otros_act_corr, use_container_width=True)
 
         st.caption('1/ Otros activos corrientes incluye: (i) Otros activos financieros al costo amortizado; '
                    '(ii) Otros activos; y (iii) Activos mantenidos para la venta.')
@@ -485,12 +497,16 @@ elif sidebar_options == 'Balance General':
             'Propiedad, planta y equipo': balance_sheet['Propiedad, planta y equipo'] / 1000
         })
 
-        fig_prop_plant_eq = px.bar(prop_plant_eq, x = 'año', y = 'Propiedad, planta y equipo',
-                                labels = {'año': 'Año', 'Propiedad, planta y equipo': 'En millones de US$'},
-                                title = 'Propiedad, planta y equipo', text_auto = ',.0f'
-                                )
+        fig_prop_plant_eq = px.bar(
+            prop_plant_eq,
+            x='año',
+            y='Propiedad, planta y equipo',
+            labels={'año': 'Año', 'Propiedad, planta y equipo': 'En millones de US$'},
+            title='Propiedad, planta y equipo',
+            text_auto=',.0f'
+        )
 
-        st.plotly_chart(fig_prop_plant_eq, use_container_width = True)
+        st.plotly_chart(fig_prop_plant_eq, use_container_width=True)
 
         # Otras cuentas por cobrar
 
@@ -499,10 +515,14 @@ elif sidebar_options == 'Balance General':
             'Otras cuentas por cobrar': balance_sheet['Otras cuentas por cobrar no corrientes'] / 1000
         })
 
-        fig_otras_ctas_cobrar = px.bar(otras_ctas_cobrar, x = 'año', y = 'Otras cuentas por cobrar',
-                                   labels = {'año': 'Año', 'Otras cuentas por cobrar': 'En millones de US$'},
-                                   title = 'Otras cuentas por cobrar', text_auto = ',.0f'
-                                   )
+        fig_otras_ctas_cobrar = px.bar(
+            otras_ctas_cobrar,
+            x = 'año',
+            y = 'Otras cuentas por cobrar',
+            labels = {'año': 'Año', 'Otras cuentas por cobrar': 'En millones de US$'},
+            title = 'Otras cuentas por cobrar',
+            text_auto = ',.0f'
+        )
 
         st.plotly_chart(fig_otras_ctas_cobrar, use_container_width = True)
 
@@ -1164,10 +1184,10 @@ elif sidebar_options == 'Estado de Resultados':
     #resultado_neto = '{:0n}'.format(resultado_neto)
 
     fig_inc_stmt = go.Figure(go.Waterfall(
-        orientation = "v",
-        base = 0,
-        measure = ['absolute', 'relative', 'relative', 'relative', 'relative', 'relative', 'total'],
-        x = [
+        orientation="v",
+        base=0,
+        measure=['absolute', 'relative', 'relative', 'relative', 'relative', 'relative', 'total'],
+        x=[
             'Ingresos ordinarios',
             'Otros ingresos',
             'Costo de ventas',
@@ -1175,17 +1195,17 @@ elif sidebar_options == 'Estado de Resultados':
             'Gastos financieros',
             'Impuestos',
             'Resultado del ejercicio'],
-        text = [ing_act_ord, ot_ing_op, costo_ventas, gastos_operacion, gastos_fin, impuesto_ganancias, resultado_neto],
-        textposition = 'outside',
-        y = [ing_act_ord, ot_ing_op, costo_ventas, gastos_operacion, gastos_fin, impuesto_ganancias, resultado_neto]
+        text=[ing_act_ord, ot_ing_op, costo_ventas, gastos_operacion, gastos_fin, impuesto_ganancias, resultado_neto],
+        textposition='outside',
+        y=[ing_act_ord, ot_ing_op, costo_ventas, gastos_operacion, gastos_fin, impuesto_ganancias, resultado_neto]
     ))
 
     fig_inc_stmt.update_layout(
-        title = 'Estado de resultados de ' + empresa + ' para el año ' + str(year_latest),
-        showlegend = False
+        title='Estado de resultados de ' + empresa + ' para el año ' + str(year_latest),
+        showlegend=False
     )
 
-    st.plotly_chart(fig_inc_stmt, use_container_width = False, height = 4800, width = 4000)
+    st.plotly_chart(fig_inc_stmt, use_container_width=False, height=4800, width=4000)
 
 # FLUJO DE EFECTIVO
 
