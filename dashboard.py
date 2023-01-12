@@ -907,7 +907,7 @@ elif sidebar_options == 'Balance General':
 
         st.plotly_chart(fig_rotacion_caja, use_container_width = True)
 
-        st.latex(r'''Rotación\;de\;cartera = \frac{Inventarios * 360}{Costo\;de\;ventas}
+        st.latex(r'''Rotación\;de\;caja = \frac{Inventarios * 360}{Costo\;de\;ventas}
         ''')
 
         # Rotación de activos
